@@ -7,5 +7,5 @@ matrix:
             - "3.8"
         install:
         script: 
-            - python test/test.py
+            - python FooFinder/test.py
     
