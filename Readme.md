@@ -5,6 +5,7 @@ A package designed to help you find foo.
 
 ## Usage:
 ```
+import FooFinder
 from FooFinder import MySuperAwesomeModule
 ```
 
