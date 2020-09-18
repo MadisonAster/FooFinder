@@ -1,5 +1,5 @@
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/FooFinder)
 ![PyPI](https://img.shields.io/pypi/v/FooFinder)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/FooFinder)
 [![Build Status](https://travis-ci.org/MadisonAster/FooFinder.svg?branch=master)](https://travis-ci.org/MadisonAster/FooFinder)
 
 
