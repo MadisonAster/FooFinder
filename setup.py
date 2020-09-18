@@ -1,15 +1,17 @@
 import os
 from setuptools import setup
 
+'''
 def readme():
     with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.md'), encoding='utf-8') as file:
         filetext = file.read()
     return filetext
+'''
 setup(
     name='FooFinder',
     version='0.9.1',
     description='A package designed to help you find foo.',
-    long_description=readme(),
+    #long_description=readme(),
     long_description_content_type='text/markdown',
     python_requires='>3.6.0',
     url='https://github.com/MadisonAster/FooFinder',
