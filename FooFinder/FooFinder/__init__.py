@@ -27,6 +27,7 @@ def _import(name, *args, **kwargs):
             break
     else:
         for root, dirs, files in os.walk(cwd):
+            dirs.sort()
             path = root+'/'+name+'.py'
             if os.path.exists(path):
                 module = _loadmodule(name, path)
