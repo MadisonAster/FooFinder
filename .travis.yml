@@ -24,4 +24,4 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-    #edge: true # opt in to dpl v2
+    edge: true # opt in to dpl v2
