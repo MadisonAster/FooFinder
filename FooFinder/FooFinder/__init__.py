@@ -1,5 +1,6 @@
 import sys, os, builtins, inspect, traceback
 from importlib import machinery
+from pprint import pprint
 
 def _loadmodule(name, path):
     module = machinery.SourceFileLoader(name, path).load_module()
@@ -32,5 +33,18 @@ def _import(name, *args, **kwargs):
                 break
     return sys.modules['FooFinder']
 
+#replace builtin importer so the ugly hack below only has to run once
 original_import = builtins.__import__
 builtins.__import__ = _import
+
+##this hack is lame...
+frame = inspect.currentframe()
+while inspect.getframeinfo(frame).function != '_find_and_load':
+    frame = frame.f_back
+frame = frame.f_back #go 1 more step back to get calling function
+context = inspect.getframeinfo(frame).code_context[0] #get line that called FooFinder
+mname = context.split('from FooFinder import ',1)[-1].rstrip() #split on syntax
+mname = mname.split(' as',1)[0] #in case someone tries import as
+args = ('','',(mname,))
+_import('FooFinder', *args)
+

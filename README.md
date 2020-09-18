@@ -12,7 +12,6 @@ pip install FooFinder
 
 ## Usage:
 ```
-import FooFinder
 from FooFinder import MySuperAwesomeModule
 ```
 
