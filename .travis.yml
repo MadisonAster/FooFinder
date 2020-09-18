@@ -13,4 +13,4 @@ deploy:
     provider: pypi
     username: MadisonAster
     password: poUz1q0o9S2HbPfaE9+vOyjgP8nhBdqoUEFQwuvYCP2ztsMgfug0N/0rOkbdFckvpFk8m+v1z+9enRCGr92Ja+0xTf2ALBVWWR8RHiObH8fu/sPpYROGADssPSOCqhRlxJr/eunnJbKSj04NVU07Zu5QkPpIb+VpDS9TJLpu/qkPOrSx3+yA1C457PYH5gbgUw8Gx33A3WI+8CT9rTVLga04Ki/zzrObQDSHdEMD5ULz6fyVUMJdLOqnH1GCm3Thqm09F17Fh6+QqSYzbFFgugE6N/4LZ+fGtfMhqBLkr73kOR59T3K5TgCEGAFVhPCLXtJuB1gsF6lXtQl0k4WUNp4elLHzfHAKBZBZZtjeX1rp492wms9gdJ+bbN1qnbBlcQFjjcF0oJ7+ktftS+qZjg6yAsSajOOpAQvCAv4vz1wDjJDZhj1RjSIVCg/5AbWXjgawwn9Yk3/3y6IaD8vPw4CFmreL6SPdVMpkyLyp2/Hvqd5onaLRvvtZW/hS+pQzfbNcWGZZmjFWqsD4+ohiQ5Ql/CO3Fi6uxrWDEzDMps5aFwgn3xsBiGW7bM9xnbjuxIXy1djI+Y1TnDFU45uAglTcGQ+/0HqSAuZJ5GwT3vZQdfRLoIu8FeRvAnWIHGMyvSdupkYq4fpUxoF1W9dwTvAzjjapZvr8waEXfNsril8=
-    edge: true # opt in to dpl v2
+    edge: false # opt in to dpl v2
