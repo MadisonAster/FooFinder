@@ -2,7 +2,7 @@ import os
 from setuptools import setup
 
 def readme():
-    with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.md'), encoding='utf-8') as file:
+    with open('README.md'), 'r') as file:
         filetext = file.read()
     return filetext
 setup(
@@ -14,6 +14,7 @@ setup(
     python_requires='>3.6.0',
     url='https://github.com/MadisonAster/FooFinder',
     author='Madison Aster',
+    author_email='info@MadisonAster.com',
     license='GPL',
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
