@@ -5,6 +5,7 @@ setup(
     version='1.0.0',
     description='A package designed to help you find foo.',
     long_description='FooFinder will walk up to each parent directory from your current module, and look for a module to import with the name you give it.',
+    long_description_content_type='text/markdown',
     python_requires='>3.4.0',
     url='https://github.com/MadisonAster/FooFinder',
     author='Madison Aster',
