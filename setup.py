@@ -2,7 +2,7 @@ import os
 from setuptools import setup
 
 def readme():
-    with open('README.md', encoding='utf-8') as file:
+    with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.md'), encoding='utf-8') as file:
         filetext = file.read()
     return filetext
 setup(
