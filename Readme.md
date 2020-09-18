@@ -3,3 +3,9 @@
 
 A package designed to help you find foo.
 
+## Usage:
+```
+from FooFinder import MySuperAwesomeModule
+```
+
+FooFinder will walk up to each parent directory from your current module, and look for a module to import with the name you give it.
