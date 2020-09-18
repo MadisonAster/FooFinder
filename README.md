@@ -16,4 +16,4 @@ import FooFinder
 from FooFinder import MySuperAwesomeModule
 ```
 
-FooFinder will walk up to each parent directory from your current module and look for a module to import with the name you give it.
+FooFinder will walk up to each parent directory, and down to each child directory, from the location of your current module. FooFinder will import and return the first module that it finds with the name you give it.
