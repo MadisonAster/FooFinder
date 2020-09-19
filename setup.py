@@ -7,7 +7,7 @@ def readme():
     return filetext
 setup(
     name='FooFinder',
-    version='1.0.8',
+    version='1.0.9',
     description='A package designed to help you find foo.',
     long_description=readme(),
     long_description_content_type='text/markdown',
@@ -15,7 +15,7 @@ setup(
     url='https://github.com/MadisonAster/FooFinder',
     author='Madison Aster',
     author_email='info@MadisonAster.com',
-    license='GPL',
+    license='LGPL',
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
