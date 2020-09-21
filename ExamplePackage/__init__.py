@@ -1,0 +1,1 @@
+ExampleAttribute = 'Hello Packages!'

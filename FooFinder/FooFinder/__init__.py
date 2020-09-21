@@ -17,7 +17,10 @@ def _import(name, *args, **kwargs):
     elif name in sys.modules:
         globals()[name] = sys.modules[name]
         return sys.modules['FooFinder']
-    frame = inspect.currentframe().f_back
+    if 'frame' in kwargs:
+        frame = kwargs['frame']
+    else:
+        frame = inspect.currentframe().f_back
     cwd = os.path.dirname(os.path.abspath(frame.f_globals['__file__'])).replace('\\','/').rstrip('/')
     for i in range(len(cwd.rsplit('/'))):
         folder = cwd.rsplit('/',i)[0]
@@ -28,7 +31,7 @@ def _import(name, *args, **kwargs):
     else:
         for root, dirs, files in os.walk(cwd):
             dirs.sort()
-            path = root+'/'+name+'.py'
+            path = os.path.join(root, name+'.py')
             if os.path.exists(path):
                 module = _loadmodule(name, path)
                 break
@@ -46,5 +49,5 @@ frame = frame.f_back #go 1 more step back to get calling function
 context = inspect.getframeinfo(frame).code_context[0] #get line that called FooFinder
 mname = context.split('from FooFinder import ',1)[-1].split(' ')[0].split('#')[0] #split on syntax
 args = ('','',(mname,))
-_import('FooFinder', *args)
+_import('FooFinder', *args, frame=frame)
 
