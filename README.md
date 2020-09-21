@@ -18,7 +18,8 @@ from FooFinder import MySuperAwesomeModule
 FooFinder will walk up to each parent directory, and down to each child directory, from the location of your current module. FooFinder will import and return the first module that it finds with the name you give it.
 
 
-### Other ways to use FooFinder:
+
+## Other ways to use FooFinder:
 
 #### Using a namespace:
 ```
