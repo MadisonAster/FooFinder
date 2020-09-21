@@ -16,3 +16,19 @@ from FooFinder import MySuperAwesomeModule
 ```
 
 FooFinder will walk up to each parent directory, and down to each child directory, from the location of your current module. FooFinder will import and return the first module that it finds with the name you give it.
+
+
+### Other ways to use FooFinder:
+
+#### Using a namespace:
+```
+from FooFinder import CoolStuff as SuperCoolStuff
+```
+
+
+#### Importing a Package:
+```
+from FooFinder import MyNiftyPackage
+```
+
+FooFinder can will find the package you're currently in, a package from a parent directory, or a package from achild directory.
