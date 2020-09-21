@@ -27,7 +27,7 @@ from FooFinder import CoolStuff as SuperCoolStuff
 ```
 
 
-#### Importing a Package:
+#### Importing a package:
 ```
 from FooFinder import MyNiftyPackage
 ```
