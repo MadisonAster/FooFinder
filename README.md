@@ -38,4 +38,4 @@ from FooFinder import MyNiftyPackage
 
 ---
 
-### ***FooFinder will find the package you're currently in, a package from a parent directory, or a package from a child directory.***
+### ***FooFinder can find the package you're currently in, a package from a parent directory, or a package from a child directory.***
