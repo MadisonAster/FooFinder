@@ -64,6 +64,7 @@ while inspect.getframeinfo(frame).function != '_find_and_load':
 frame = frame.f_back #go 1 more step back to get calling function
 context = inspect.getframeinfo(frame).code_context[0] #get line that called FooFinder
 mname = context.split('from FooFinder import ',1)[-1].split(' ')[0].split('#')[0] #split on syntax
-args = ('','',(mname,))
-_import('FooFinder', *args, frame=frame)
+if mname != '': #import FooFinder shouldn't run _import
+    args = ('','',(mname,))
+    _import('FooFinder', *args, frame=frame)
 

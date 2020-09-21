@@ -30,7 +30,7 @@ class test_FooFinder(unittest.TestCase):
         e = Ruth.ExampleBaseClass()
         self.assertEqual(e.ExampleAttribute, 'Hello World!')
     
-    def test_zzIrregularImport(self):
+    def test_IrregularImport(self):
         import FooFinder #make sure this doesn't throw errors
         import inspect #prove we're only affecting FooFinder imports
 
