@@ -15,6 +15,8 @@ pip install FooFinder
 from FooFinder import MySuperAwesomeModule
 ```
 
+---
+
 ### ***FooFinder will walk up to each parent directory, and down to each child directory, from the location of your current module. FooFinder will import and return the first module that it finds with the name you give it.***
 
 ---
@@ -31,5 +33,7 @@ from FooFinder import CoolStuff as SuperCoolStuff
 ```
 from FooFinder import MyNiftyPackage
 ```
+
+---
 
 ### ***FooFinder can will find the package you're currently in, a package from a parent directory, or a package from achild directory.***
