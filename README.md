@@ -32,4 +32,4 @@ from FooFinder import CoolStuff as SuperCoolStuff
 from FooFinder import MyNiftyPackage
 ```
 
-FooFinder can will find the package you're currently in, a package from a parent directory, or a package from achild directory.
+### ***FooFinder can will find the package you're currently in, a package from a parent directory, or a package from achild directory.***
