@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/MadisonAster/FooFinder.svg?branch=master)](https://travis-ci.org/MadisonAster/FooFinder)
 
 
-*A package designed to help you find foo. FooFinder makes relative imports easy with this one simple trick.*
+*A package designed to help you find foo. FooFinder makes relative imports easy with this one simple trick!*
 
 ---
 
