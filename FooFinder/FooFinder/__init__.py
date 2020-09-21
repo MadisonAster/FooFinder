@@ -8,6 +8,29 @@ def _loadmodule(name, path):
     globals()[name] = module
     return module
 
+def _loadpackage(name, path):
+    print('_loadpackage', name, path)
+
+def _folderwalker(cwd):
+    cwd = cwd.replace('\\','/').rstrip('/')
+    for i in range(len(cwd.rsplit('/'))):
+        root = cwd.rsplit('/',i)[0]
+        yield root
+    else:
+        for root, dirs, files in os.walk(cwd):
+            dirs.sort() #some systems return unsorted directory listings
+                        #python uses the dirs iterator to do it's walking
+                        #so we have to sort if we want to find things in 
+                        #order on all systems
+            folder = os.path.split(root)[-1]
+            if folder in ['__pycache__']:
+                continue
+            if folder[0] == '.': #.git .hg etc
+                continue
+            if folder.rsplit('.',1)[-1] == 'egg-info':
+                continue
+            yield root
+            
 def _import(name, *args, **kwargs):
     if name != 'FooFinder' or not args[2]:
         return original_import(name, *args, **kwargs)
@@ -21,20 +44,20 @@ def _import(name, *args, **kwargs):
         frame = kwargs['frame']
     else:
         frame = inspect.currentframe().f_back
-    cwd = os.path.dirname(os.path.abspath(frame.f_globals['__file__'])).replace('\\','/').rstrip('/')
-    for i in range(len(cwd.rsplit('/'))):
-        folder = cwd.rsplit('/',i)[0]
-        path = folder+'/'+name+'.py'
+
+    print('_import', name)
+    cwd = os.path.dirname(os.path.abspath(frame.f_globals['__file__']))
+    for root in _folderwalker(cwd):
+        print('search root', root)
+        path = os.path.join(root, name)
+        ppath = os.path.join(path, '__init__.py')
+        path = path+'.py'
         if os.path.exists(path):
             module = _loadmodule(name, path)
             break
-    else:
-        for root, dirs, files in os.walk(cwd):
-            dirs.sort()
-            path = os.path.join(root, name+'.py')
-            if os.path.exists(path):
-                module = _loadmodule(name, path)
-                break
+        if os.path.exists(ppath):
+            package = _loadpackage(name, ppath)
+            break
     return sys.modules['FooFinder']
 
 #replace builtin importer so the ugly hack below only has to run once
