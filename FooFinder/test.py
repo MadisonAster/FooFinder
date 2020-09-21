@@ -26,7 +26,7 @@ class test_FooFinder(unittest.TestCase):
         PackageTestModule.test_ParentPackages()
     
     def test_NameSpaces(self):
-        from FooFinder import ExampleBaseModule as Ruth #prove child imports work
+        from FooFinder import ExampleBaseModule as Ruth #prove namespaces work
         e = Ruth.ExampleBaseClass()
         self.assertEqual(e.ExampleAttribute, 'Hello World!')
     
