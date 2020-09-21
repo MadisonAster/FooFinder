@@ -39,3 +39,5 @@ from FooFinder import MyNiftyPackage
 ---
 
 ### ***FooFinder can find the package you're currently in, a package from a parent directory, or a package from a child directory. Modules within packages will be found as if they were folders.***
+
+See the [test module](https://github.com/MadisonAster/FooFinder/blob/master/FooFinder/test.py) for example usage and complete test coverage.
