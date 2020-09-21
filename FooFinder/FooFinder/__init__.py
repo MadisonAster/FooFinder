@@ -1,15 +1,11 @@
 import sys, os, builtins, inspect, traceback
 from importlib import machinery
-from pprint import pprint
 
 def _loadmodule(name, path):
     module = machinery.SourceFileLoader(name, path).load_module()
     sys.modules[name] = module
     globals()[name] = module
     return module
-
-def _loadpackage(name, path):
-    print('_loadpackage', name, path)
 
 def _folderwalker(cwd):
     cwd = cwd.replace('\\','/').rstrip('/')
@@ -44,19 +40,16 @@ def _import(name, *args, **kwargs):
         frame = kwargs['frame']
     else:
         frame = inspect.currentframe().f_back
-
-    print('_import', name)
     cwd = os.path.dirname(os.path.abspath(frame.f_globals['__file__']))
     for root in _folderwalker(cwd):
-        print('search root', root)
         path = os.path.join(root, name)
         ppath = os.path.join(path, '__init__.py')
         path = path+'.py'
         if os.path.exists(path):
-            module = _loadmodule(name, path)
+            _loadmodule(name, path)
             break
         if os.path.exists(ppath):
-            package = _loadpackage(name, ppath)
+            _loadmodule(name, ppath)
             break
     return sys.modules['FooFinder']
 

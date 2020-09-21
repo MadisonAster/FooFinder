@@ -2,20 +2,28 @@ import unittest
 
 class test_FooFinder(unittest.TestCase):
     def test_UpstreamModules(self):
-        from FooFinder import ExampleBaseModule #prove parent imports work
+        from FooFinder import ExampleBaseModule #prove upstream imports work
         e = ExampleBaseModule.ExampleBaseClass()
         self.assertEqual(e.ExampleAttribute, 'Hello World!')
         self.assertNotEqual(e.ExampleAttribute, 'No Dice!')
 
     def test_DownstreamModules(self):
-        from FooFinder import ExampleBaseModule2 #prove child imports work
+        from FooFinder import ExampleBaseModule2 #prove downstream imports work
         e = ExampleBaseModule2.ExampleBaseClass()
         self.assertEqual(e.ExampleAttribute, 'Hello World!')
     
-    #def test_ParentPackages
-    #def test_UpstreamPackages
-    #def test_DownstreamPackages
-    #def test_PackageModules
+    def test_UpstreamPackages(self):
+        from FooFinder import ExamplePackage #prove upstream packages work
+        self.assertEqual(ExamplePackage.ExampleAttribute, 'Hello Packages!')
+    
+    def test_DownstreamPackages(self):
+        from FooFinder import TestPackage #prove downstream packages work
+        self.assertEqual(TestPackage.ExampleAttribute1, 'Hello Downstream Packages!')
+    
+    def test_DownstreamTestCall(self):
+        from FooFinder import PackageTestModule
+        print(PackageTestModule.test_ParentPackages)
+        PackageTestModule.test_ParentPackages()
     
     def test_NameSpaces(self):
         from FooFinder import ExampleBaseModule as Ruth #prove child imports work

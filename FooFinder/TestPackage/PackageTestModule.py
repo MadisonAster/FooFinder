@@ -1,4 +1,7 @@
-class test_FooFinder(unittest.TestCase):
-    pass
+import unittest
+
+def test_ParentPackages():
+    from FooFinder import TestPackage
+    assert TestPackage.ExampleAttribute2 == 'Hello Parent Packages!'
     
-    #def test_ParentPackages
+    
