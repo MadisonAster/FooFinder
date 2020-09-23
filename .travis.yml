@@ -25,10 +25,16 @@ matrix:
       os: linux
       dist: xenial
       python: 3.7.5
+    
+    - name: Deployment
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.8.1
 install: 
 script: 
   - python FooFinder/test.py
-  - if [[ "$TRAVIS_JOB_NUMBER" == *.4 ]]; then export RUN_DEPLOY="true"; fi
+  - if [[ "$TRAVIS_JOB_NAME" == "Deployment" ]]; then export RUN_DEPLOY="true"; fi
 deploy:
   - provider: releases
     token: $RELEASES_TOKEN
