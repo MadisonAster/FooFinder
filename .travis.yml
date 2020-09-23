@@ -10,9 +10,8 @@ matrix:
     - '3.9'
     - '3.9-dev'
     - 'nightly'
-    install: 
-    script:
-    - python FooFinder/test.py
+install: 
+script: python FooFinder/test.py
 deploy:
   - provider: pypi
     distributions: sdist bdist_wheel
