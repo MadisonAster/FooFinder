@@ -2,11 +2,23 @@
 
 matrix:
   include:
-    - name: CPython 3.8 on Ubuntu (Xenial Xerus)
+    - name: CPython 3.8-dev on Ubuntu (Xenial Xerus)
       language: python
       os: linux
       dist: xenial
-      python: 3.8
+      python: nightly
+    
+    - name: CPython 3.8-dev on Ubuntu (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.8-dev
+
+    - name: CPython 3.8.0 on Ubuntu (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.8.0
 
     - name: CPython 3.7 on Ubuntu (Xenial Xerus)
       language: python
