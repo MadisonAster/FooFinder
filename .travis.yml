@@ -22,7 +22,7 @@ matrix:
 install: 
 script: 
   - python FooFinder/test.py
-  - echo $TRAVIS_JOB_ID
+  - echo $TRAVIS_JOB_NUMBER
   - echo $TRAVIS_JOB_NAME
 deploy:
   - provider: pypi
