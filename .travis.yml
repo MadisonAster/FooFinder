@@ -2,59 +2,17 @@
 
 matrix:
   include:
-    - name: CPython 3.8.1 on Ubuntu (Xenial Xerus)
+    - name: CPython 3.8 on Ubuntu (Xenial Xerus)
       language: python
       os: linux
       dist: xenial
-      python: 3.8.1
+      python: 3.8
 
-    - name: CPython 3.8.0 on Ubuntu (Xenial Xerus)
+    - name: CPython 3.7 on Ubuntu (Xenial Xerus)
       language: python
       os: linux
       dist: xenial
-      python: 3.8.0
-
-    - name: CPython 3.7.6 on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.7.6
-
-    - name: CPython 3.7.5 on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.7.5
-
-    - name: CPython 3.7.4 on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.7.4
-
-    - name: CPython 3.7.3 on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.7.3
-
-    - name: CPython 3.7.2 on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.7.2
-
-    - name: CPython 3.7.1 on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.7.1
-
-    - name: CPython 3.7.0 on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.7.0
+      python: 3.7
 
     - name: CPython 3.6.8 on Ubuntu (Xenial Xerus)
       language: python
