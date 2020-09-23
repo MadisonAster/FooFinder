@@ -56,19 +56,12 @@ matrix:
       dist: xenial
       python: 3.5.2
 
-    - name: CPython nightly on Windows 10 (64-bit)
+    - name: CPython 3.8 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version nightly
-
-    - name: CPython 3.8-dev on Windows 10 (64-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.8-dev
+        - choco install python --version 3.8
 
     - name: CPython 3.8.0 on Windows 10 (64-bit)
       language: shell
@@ -77,12 +70,12 @@ matrix:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
         - choco install python --version 3.8.0
 
-    - name: CPython 3.7-dev on Windows 10 (64-bit)
+    - name: CPython 3.7 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.7-dev
+        - choco install python --version 3.7
 
     - name: CPython 3.7.0 on Windows 10 (64-bit)
       language: shell
@@ -91,12 +84,12 @@ matrix:
         - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
         - choco install python --version 3.7.0
 
-    - name: CPython 3.6-dev on Windows 10 (64-bit)
+    - name: CPython 3.6 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.6-dev
+        - choco install python --version 3.6
 
     - name: CPython 3.6.1 on Windows 10 (64-bit)
       language: shell
@@ -105,12 +98,12 @@ matrix:
         - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
         - choco install python --version 3.6.1
 
-    - name: CPython 3.5-dev on Windows 10 (64-bit)
+    - name: CPython 3.5 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.5-dev
+        - choco install python --version 3.5
         
     - name: CPython 3.5.2 on Windows 10 (64-bit)
       language: shell
@@ -118,20 +111,13 @@ matrix:
       before_install:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
         - choco install python --version 3.5.2.20161029
-
-    - name: CPython nightly on Windows 10 (32-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version nightly --x86
         
-    - name: CPython 3.8-dev on Windows 10 (32-bit)
+    - name: CPython 3.8 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.8-dev --x86
+        - choco install python --version 3.8 --x86
 
     - name: CPython 3.8.0 on Windows 10 (32-bit)
       language: shell
@@ -140,12 +126,12 @@ matrix:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
         - choco install python --version 3.8.0 --x86
 
-    - name: CPython 3.7-dev on Windows 10 (32-bit)
+    - name: CPython 3.7 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.7-dev --x86
+        - choco install python --version 3.7 --x86
         
     - name: CPython 3.7.0 on Windows 10 (32-bit)
       language: shell
@@ -154,12 +140,12 @@ matrix:
         - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
         - choco install python --version 3.7.0 --x86
 
-    - name: CPython 3.6-dev on Windows 10 (32-bit)
+    - name: CPython 3.6 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.6-dev --x86
+        - choco install python --version 3.6 --x86
 
     - name: CPython 3.6.1 on Windows 10 (32-bit)
       language: shell
@@ -168,12 +154,12 @@ matrix:
         - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
         - choco install python --version 3.6.1 --x86
 
-    - name: CPython 3.5-dev on Windows 10 (32-bit)
+    - name: CPython 3.5 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.5-dev --x86
+        - choco install python --version 3.5 --x86
 
     - name: CPython 3.5.2 on Windows 10 (32-bit)
       language: shell
