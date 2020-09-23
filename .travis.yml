@@ -52,7 +52,7 @@ matrix:
       os: windows
       before_install:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5
+        - choco install python --version 3.5.2
 
     - name: CPython 3.8 on Windows 10 (32-bit)
       language: shell
@@ -80,7 +80,7 @@ matrix:
       os: windows
       before_install:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5 --x86
+        - choco install python --version 3.5.2 --x86
 
     - name: CPython 3.8 on macOS 10.15 (Catalina)
       language: shell
@@ -114,14 +114,22 @@ matrix:
         - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5
         - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
   
-    - name: CPython 3.8 on macOS 10.14 (Mojave)
+    - name: CPython 3.8-dev on macOS 10.14 (Mojave)
       language: shell
       os: osx
       osx_image: xcode11.3
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8-dev
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-
+    
+    - name: CPython 3.8.0 on macOS 10.14 (Mojave)
+      language: shell
+      os: osx
+      osx_image: xcode11.3
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+    
     - name: CPython 3.7 on macOS 10.14 (Mojave)
       language: shell
       os: osx
