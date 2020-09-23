@@ -352,12 +352,12 @@ matrix:
         - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5-dev
         - pyenv install $PYENV_VERSION
 
-    - name: CPython 3.5.3 on macOS 10.13 (High Sierra)
+    - name: CPython 3.5.2 on macOS 10.13 (High Sierra)
       language: shell
       os: osx
       osx_image: xcode10.1
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.3
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.2
         - pyenv install $PYENV_VERSION
     
     - stage: deployment
