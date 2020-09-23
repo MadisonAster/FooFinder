@@ -2,7 +2,7 @@
 
 matrix:
   include:
-    - name: CPython 3.8-dev on Ubuntu (Xenial Xerus)
+    - name: CPython nightly on Ubuntu (Xenial Xerus)
       language: python
       os: linux
       dist: xenial
@@ -38,11 +38,11 @@ matrix:
       dist: xenial
       python: 3.6-dev
       
-    - name: CPython 3.6.0 on Ubuntu (Xenial Xerus)
+    - name: CPython 3.6.1 on Ubuntu (Xenial Xerus)
       language: python
       os: linux
       dist: xenial
-      python: 3.6.0
+      python: 3.6.1
 
     - name: CPython 3.5-dev on Ubuntu (Xenial Xerus)
       language: python
@@ -50,62 +50,132 @@ matrix:
       dist: xenial
       python: 3.5-dev
       
-    - name: CPython 3.5.0 on Ubuntu (Xenial Xerus)
+    - name: CPython 3.5.1 on Ubuntu (Xenial Xerus)
       language: python
       os: linux
       dist: xenial
-      python: 3.5.0
+      python: 3.5.1
 
-    - name: CPython 3.8 on Windows 10 (64-bit)
+    - name: CPython nightly on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.8
+        - choco install python --version nightly
 
-    - name: CPython 3.7 on Windows 10 (64-bit)
+    - name: CPython 3.8-dev on Windows 10 (64-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - choco install python --version 3.8-dev
+
+    - name: CPython 3.8.0 on Windows 10 (64-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - choco install python --version 3.8.0
+
+    - name: CPython 3.7-dev on Windows 10 (64-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - choco install python --version 3.7-dev
+
+    - name: CPython 3.7.0 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
-        - choco install python --version 3.7
+        - choco install python --version 3.7.0
 
-    - name: CPython 3.6 on Windows 10 (64-bit)
+    - name: CPython 3.6-dev on Windows 10 (64-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - choco install python --version 3.6-dev
+
+    - name: CPython 3.6.1 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
-        - choco install python --version 3.6
+        - choco install python --version 3.6.1
 
-    - name: CPython 3.5 on Windows 10 (64-bit)
+    - name: CPython 3.5-dev on Windows 10 (64-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - choco install python --version 3.5-dev
+        
+    - name: CPython 3.5.2 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
         - choco install python --version 3.5.2.20161029
 
-    - name: CPython 3.8 on Windows 10 (32-bit)
+    - name: CPython nightly on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.8 --x86
+        - choco install python --version nightly --x86
+        
+    - name: CPython 3.8-dev on Windows 10 (32-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - choco install python --version 3.8-dev --x86
 
-    - name: CPython 3.7 on Windows 10 (32-bit)
+    - name: CPython 3.8.0 on Windows 10 (32-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - choco install python --version 3.8.0 --x86
+
+    - name: CPython 3.7-dev on Windows 10 (32-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - choco install python --version 3.7-dev --x86
+        
+    - name: CPython 3.7.0 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
-        - choco install python --version 3.7 --x86
+        - choco install python --version 3.7.0 --x86
 
-    - name: CPython 3.6 on Windows 10 (32-bit)
+    - name: CPython 3.6-dev on Windows 10 (32-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - choco install python --version 3.6-dev --x86
+
+    - name: CPython 3.6.1 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
-        - choco install python --version 3.6 --x86
+        - choco install python --version 3.6.1 --x86
 
-    - name: CPython 3.5 on Windows 10 (32-bit)
+    - name: CPython 3.5-dev on Windows 10 (32-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - choco install python --version 3.5-dev --x86
+
+    - name: CPython 3.5.2 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
@@ -160,12 +230,12 @@ matrix:
         - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6-dev
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
         
-    - name: CPython 3.6.0 on macOS 10.15 (Catalina)
+    - name: CPython 3.6.1 on macOS 10.15 (Catalina)
       language: shell
       os: osx
       osx_image: xcode12u
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.0
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.1
         - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
         
     - name: CPython 3.5-dev on macOS 10.15 (Catalina)
@@ -176,12 +246,12 @@ matrix:
         - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5-dev
         - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
 
-    - name: CPython 3.5.0 on macOS 10.15 (Catalina)
+    - name: CPython 3.5.1 on macOS 10.15 (Catalina)
       language: shell
       os: osx
       osx_image: xcode12u
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.0
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.1
         - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
   
     - name: CPython nightly on macOS 10.14 (Mojave)
@@ -208,6 +278,14 @@ matrix:
         - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
     
+    - name: CPython 3.7-dev on macOS 10.14 (Mojave)
+      language: shell
+      os: osx
+      osx_image: xcode11.3
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7-dev
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+
     - name: CPython 3.7 on macOS 10.14 (Mojave)
       language: shell
       os: osx
@@ -216,15 +294,39 @@ matrix:
         - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
 
-    - name: CPython 3.6 on macOS 10.14 (Mojave)
+    - name: CPython 3.6-dev on macOS 10.14 (Mojave)
       language: shell
       os: osx
       osx_image: xcode11.3
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.0
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6-dev
+        - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
+    
+    - name: CPython 3.6.1 on macOS 10.14 (Mojave)
+      language: shell
+      os: osx
+      osx_image: xcode11.3
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.1
         - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
 
-    - name: CPython 3.8 on macOS 10.13 (High Sierra)
+    - name: CPython nightly on macOS 10.13 (High Sierra)
+      language: shell
+      os: osx
+      osx_image: xcode10.1
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=nightly
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+
+    - name: CPython 3.8-dev on macOS 10.13 (High Sierra)
+      language: shell
+      os: osx
+      osx_image: xcode10.1
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8-dev
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+
+    - name: CPython 3.8.0 on macOS 10.13 (High Sierra)
       language: shell
       os: osx
       osx_image: xcode10.1
@@ -232,35 +334,59 @@ matrix:
         - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
 
-    - name: CPython 3.7 on macOS 10.13 (High Sierra)
+    - name: CPython 3.7-dev on macOS 10.13 (High Sierra)
+      language: shell
+      os: osx
+      osx_image: xcode10.1
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7-dev
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+    
+    - name: CPython 3.7.0 on macOS 10.13 (High Sierra)
       language: shell
       os: osx
       osx_image: xcode10.1
       before_install:
         - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-
-    - name: CPython 3.6 on macOS 10.13 (High Sierra)
+        
+    - name: CPython 3.6-dev on macOS 10.13 (High Sierra)
       language: shell
       os: osx
       osx_image: xcode10.1
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.0
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6-dev
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
 
-    - name: CPython 3.5 on macOS 10.13 (High Sierra)
+    - name: CPython 3.6.1 on macOS 10.13 (High Sierra)
       language: shell
       os: osx
       osx_image: xcode10.1
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.0
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.1
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+        
+    - name: CPython 3.5-dev on macOS 10.13 (High Sierra)
+      language: shell
+      os: osx
+      osx_image: xcode10.1
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5-dev
+        - pyenv install $PYENV_VERSION
+
+    - name: CPython 3.5.1 on macOS 10.13 (High Sierra)
+      language: shell
+      os: osx
+      osx_image: xcode10.1
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.1
         - pyenv install $PYENV_VERSION
     
     - stage: deployment
       language: python
       os: linux
       dist: xenial
-      python: 3.8.1
+      python: nightly
 install: 
 script: 
   - python FooFinder/test.py
