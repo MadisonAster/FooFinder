@@ -52,7 +52,7 @@ matrix:
       os: windows
       before_install:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5.2
+        - choco install python --version 3.5.2.20161029
 
     - name: CPython 3.8 on Windows 10 (32-bit)
       language: shell
@@ -80,7 +80,7 @@ matrix:
       os: windows
       before_install:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5.2 --x86
+        - choco install python --version 3.5.2.20161029 --x86
 
     - name: CPython 3.8 on macOS 10.15 (Catalina)
       language: shell
