@@ -32,6 +32,10 @@ script:
   - echo $PYPI_SECRET
   - echo $RELEASES_SECRET
 deploy:
+  - provider: script
+    script: 
+      - echo $PYPI_SECRET
+      - echo $RELEASES_SECRET
   - provider: pypi
     distributions: sdist bdist_wheel
     username: "__token__"
