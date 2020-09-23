@@ -37,8 +37,7 @@ deploy:
       - echo $PYPI_SECRET
       - echo $RELEASES_SECRET
   - provider: releases
-    token: 
-      secure: $RELEASES_SECRET
+    token: $RELEASES_SECRET
     file_glob: true
     file: dist/*
     skip_cleanup: true
@@ -49,8 +48,7 @@ deploy:
   - provider: pypi
     distributions: sdist bdist_wheel
     username: "__token__"
-    password: 
-      secure: $PYPI_SECRET
+    password: $PYPI_SECRET
     on:
       tags: true
       condition: $RUN_DEPLOY = "true"
