@@ -56,12 +56,19 @@ matrix:
       dist: xenial
       python: 3.5.2
 
-    - name: CPython 3.8 on Windows 10 (64-bit)
+    - name: CPython 3.9.0 on Windows 10 (64-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python39:/c/Python39/Scripts:$PATH
+        - choco install python --version 3.9.0-rc2
+    
+    - name: CPython 3.8.5 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.8
+        - choco install python --version 3.8.5
 
     - name: CPython 3.8.0 on Windows 10 (64-bit)
       language: shell
@@ -70,12 +77,12 @@ matrix:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
         - choco install python --version 3.8.0
 
-    - name: CPython 3.7 on Windows 10 (64-bit)
+    - name: CPython 3.7.9 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.7
+        - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
+        - choco install python --version 3.7.9
 
     - name: CPython 3.7.0 on Windows 10 (64-bit)
       language: shell
@@ -84,12 +91,12 @@ matrix:
         - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
         - choco install python --version 3.7.0
 
-    - name: CPython 3.6 on Windows 10 (64-bit)
+    - name: CPython 3.6.8 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.6
+        - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
+        - choco install python --version 3.6.8
 
     - name: CPython 3.6.1 on Windows 10 (64-bit)
       language: shell
@@ -98,26 +105,34 @@ matrix:
         - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
         - choco install python --version 3.6.1
 
-    - name: CPython 3.5 on Windows 10 (64-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.5
-        
-    - name: CPython 3.5.2 on Windows 10 (64-bit)
+    - name: CPython 3.5.4 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5.2.20161029
+        - choco install python --version 3.5.4.20200110
         
-    - name: CPython 3.8 on Windows 10 (32-bit)
+    - name: CPython 3.5.1 on Windows 10 (64-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
+        - choco install python --version 3.5.1.20161002
+    
+
+    - name: CPython 3.9.0 on Windows 10 (32-bit)
+      language: shell
+      os: windows
+      before_install:
+        - export PATH=/c/Python39:/c/Python39/Scripts:$PATH
+        - choco install python --version 3.9.0-rc2 --x86
+        
+    - name: CPython 3.8.5 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.8 --x86
+        - choco install python --version 3.8.5 --x86
 
     - name: CPython 3.8.0 on Windows 10 (32-bit)
       language: shell
@@ -126,13 +141,13 @@ matrix:
         - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
         - choco install python --version 3.8.0 --x86
 
-    - name: CPython 3.7 on Windows 10 (32-bit)
+    - name: CPython 3.7.9 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.7 --x86
-        
+        - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
+        - choco install python --version 3.7.9 --x86
+
     - name: CPython 3.7.0 on Windows 10 (32-bit)
       language: shell
       os: windows
@@ -140,12 +155,12 @@ matrix:
         - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
         - choco install python --version 3.7.0 --x86
 
-    - name: CPython 3.6 on Windows 10 (32-bit)
+    - name: CPython 3.6.8 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.6 --x86
+        - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
+        - choco install python --version 3.6.8 --x86
 
     - name: CPython 3.6.1 on Windows 10 (32-bit)
       language: shell
@@ -154,27 +169,19 @@ matrix:
         - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
         - choco install python --version 3.6.1 --x86
 
-    - name: CPython 3.5 on Windows 10 (32-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.5 --x86
-
-    - name: CPython 3.5.2 on Windows 10 (32-bit)
+    - name: CPython 3.5.4 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5.2.20161029 --x86
-
-    - name: CPython nightly on macOS 10.15 (Catalina)
+        - choco install python --version 3.5.4.20200110 --x86
+        
+    - name: CPython 3.5.1 on Windows 10 (32-bit)
       language: shell
-      os: osx
-      osx_image: xcode12u
+      os: windows
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=nightly
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+        - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
+        - choco install python --version 3.5.1.20161002 --x86
     
     - name: CPython 3.8-dev on macOS 10.15 (Catalina)
       language: shell
@@ -240,14 +247,6 @@ matrix:
         - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.2
         - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
   
-    - name: CPython nightly on macOS 10.14 (Mojave)
-      language: shell
-      os: osx
-      osx_image: xcode11.3
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=nightly
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-
     - name: CPython 3.8-dev on macOS 10.14 (Mojave)
       language: shell
       os: osx
@@ -311,15 +310,6 @@ matrix:
       before_install:
         - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.2
         - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
-
-
-    - name: CPython nightly on macOS 10.13 (High Sierra)
-      language: shell
-      os: osx
-      osx_image: xcode10.1
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=nightly
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
 
     - name: CPython 3.8-dev on macOS 10.13 (High Sierra)
       language: shell
