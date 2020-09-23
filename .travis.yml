@@ -29,13 +29,7 @@ install:
 script: 
   - python FooFinder/test.py
   - if [[ "$TRAVIS_JOB_NUMBER" == *.4 ]]; then export RUN_DEPLOY="true"; fi
-  - echo $PYPI_SECRET
-  - echo $RELEASES_SECRET
 deploy:
-  - provider: script
-    script: 
-      - echo $PYPI_SECRET
-      - echo $RELEASES_SECRET
   - provider: releases
     token: $RELEASES_TOKEN
     file_glob: true
