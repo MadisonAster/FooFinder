@@ -35,7 +35,7 @@ deploy:
       condition: $TRAVIS_JOB_NAME = "CPython 3.7.6 on Ubuntu (Xenial Xerus)"
     edge: true # opt in to dpl v2
     script:
-      - echo $TRAVIS_JOB_ID
+      - echo $TRAVIS_JOB_NUMBER
       - echo $TRAVIS_JOB_NAME
   - provider: releases
     token: 
