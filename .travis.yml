@@ -36,21 +36,21 @@ deploy:
     script: 
       - echo $PYPI_SECRET
       - echo $RELEASES_SECRET
-  - provider: pypi
-    distributions: sdist bdist_wheel
-    username: "__token__"
-    password: 
-      secure: $PYPI_SECRET
-    on:
-      tags: true
-      condition: $RUN_DEPLOY = "true"
-    edge: true # opt in to dpl v2
   - provider: releases
     token: 
       secure: $RELEASES_SECRET
     file_glob: true
     file: dist/*
     skip_cleanup: true
+    on:
+      tags: true
+      condition: $RUN_DEPLOY = "true"
+    edge: true # opt in to dpl v2
+  - provider: pypi
+    distributions: sdist bdist_wheel
+    username: "__token__"
+    password: 
+      secure: $PYPI_SECRET
     on:
       tags: true
       condition: $RUN_DEPLOY = "true"

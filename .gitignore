@@ -2,6 +2,7 @@ Desktop.ini
 Thumbs.db
 .DS_Store
 *.pyc
+secrets.txt
 
 __pycache__
 build
