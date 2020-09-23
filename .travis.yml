@@ -20,23 +20,41 @@ matrix:
       dist: xenial
       python: 3.8.0
 
-    - name: CPython 3.7 on Ubuntu (Xenial Xerus)
+    - name: CPython 3.7-dev on Ubuntu (Xenial Xerus)
       language: python
       os: linux
       dist: xenial
-      python: 3.7
+      python: 3.7-dev
+      
+    - name: CPython 3.7.0 on Ubuntu (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.7.0
 
-    - name: CPython 3.6 on Ubuntu (Xenial Xerus)
+    - name: CPython 3.6-dev on Ubuntu (Xenial Xerus)
       language: python
       os: linux
       dist: xenial
-      python: 3.6
+      python: 3.6-dev
+      
+    - name: CPython 3.6.0 on Ubuntu (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.6.0
 
-    - name: CPython 3.5 on Ubuntu (Xenial Xerus)
+    - name: CPython 3.5-dev on Ubuntu (Xenial Xerus)
       language: python
       os: linux
       dist: xenial
-      python: 3.5
+      python: 3.5-dev
+      
+    - name: CPython 3.5.0 on Ubuntu (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.5.0
 
     - name: CPython 3.8 on Windows 10 (64-bit)
       language: shell
@@ -94,38 +112,86 @@ matrix:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
         - choco install python --version 3.5.2.20161029 --x86
 
-    - name: CPython 3.8 on macOS 10.15 (Catalina)
+    - name: CPython nightly on macOS 10.15 (Catalina)
       language: shell
       os: osx
       osx_image: xcode12u
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=nightly
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+    
+    - name: CPython 3.8-dev on macOS 10.15 (Catalina)
+      language: shell
+      os: osx
+      osx_image: xcode12u
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8-dev
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+    
+    - name: CPython 3.8.0 on macOS 10.15 (Catalina)
+      language: shell
+      os: osx
+      osx_image: xcode12u
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
 
-    - name: CPython 3.7 on macOS 10.15 (Catalina)
+    - name: CPython 3.7-dev on macOS 10.15 (Catalina)
       language: shell
       os: osx
       osx_image: xcode12u
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7-dev
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
 
-    - name: CPython 3.6 on macOS 10.15 (Catalina)
+    - name: CPython 3.7.0 on macOS 10.15 (Catalina)
       language: shell
       os: osx
       osx_image: xcode12u
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+
+    - name: CPython 3.6-dev on macOS 10.15 (Catalina)
+      language: shell
+      os: osx
+      osx_image: xcode12u
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6-dev
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+        
+    - name: CPython 3.6.0 on macOS 10.15 (Catalina)
+      language: shell
+      os: osx
+      osx_image: xcode12u
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.0
+        - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
+        
+    - name: CPython 3.5-dev on macOS 10.15 (Catalina)
+      language: shell
+      os: osx
+      osx_image: xcode12u
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5-dev
         - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
 
-    - name: CPython 3.5 on macOS 10.15 (Catalina)
+    - name: CPython 3.5.0 on macOS 10.15 (Catalina)
       language: shell
       os: osx
       osx_image: xcode12u
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.0
         - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
   
+    - name: CPython nightly on macOS 10.14 (Mojave)
+      language: shell
+      os: osx
+      osx_image: xcode11.3
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=nightly
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+
     - name: CPython 3.8-dev on macOS 10.14 (Mojave)
       language: shell
       os: osx
@@ -147,7 +213,7 @@ matrix:
       os: osx
       osx_image: xcode11.3
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
 
     - name: CPython 3.6 on macOS 10.14 (Mojave)
@@ -155,7 +221,7 @@ matrix:
       os: osx
       osx_image: xcode11.3
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.0
         - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
 
     - name: CPython 3.8 on macOS 10.13 (High Sierra)
@@ -163,7 +229,7 @@ matrix:
       os: osx
       osx_image: xcode10.1
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
 
     - name: CPython 3.7 on macOS 10.13 (High Sierra)
@@ -171,7 +237,7 @@ matrix:
       os: osx
       osx_image: xcode10.1
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
 
     - name: CPython 3.6 on macOS 10.13 (High Sierra)
@@ -179,7 +245,7 @@ matrix:
       os: osx
       osx_image: xcode10.1
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.0
         - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
 
     - name: CPython 3.5 on macOS 10.13 (High Sierra)
@@ -187,7 +253,7 @@ matrix:
       os: osx
       osx_image: xcode10.1
       before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.0
         - pyenv install $PYENV_VERSION
     
     - stage: deployment
