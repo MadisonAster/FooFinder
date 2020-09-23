@@ -55,13 +55,6 @@ matrix:
       os: linux
       dist: xenial
       python: 3.5.2
-
-    - name: CPython 3.9.0 on Windows 10 (64-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python39:/c/Python39/Scripts:$PATH
-        - choco install python --version 3.9.0-rc2
     
     - name: CPython 3.8.5 on Windows 10 (64-bit)
       language: shell
@@ -112,20 +105,12 @@ matrix:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
         - choco install python --version 3.5.4.20200110
         
-    - name: CPython 3.5.1 on Windows 10 (64-bit)
+    - name: CPython 3.5.2 on Windows 10 (64-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5.1.20161002
-    
-
-    - name: CPython 3.9.0 on Windows 10 (32-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python39:/c/Python39/Scripts:$PATH
-        - choco install python --version 3.9.0-rc2 --x86
+        - choco install python --version 3.5.2.20161029
         
     - name: CPython 3.8.5 on Windows 10 (32-bit)
       language: shell
@@ -176,12 +161,12 @@ matrix:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
         - choco install python --version 3.5.4.20200110 --x86
         
-    - name: CPython 3.5.1 on Windows 10 (32-bit)
+    - name: CPython 3.5.2 on Windows 10 (32-bit)
       language: shell
       os: windows
       before_install:
         - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5.1.20161002 --x86
+        - choco install python --version 3.5.2.20161029 --x86
     
     - name: CPython 3.8-dev on macOS 10.15 (Catalina)
       language: shell
