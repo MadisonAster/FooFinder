@@ -1,15 +1,59 @@
 matrix:
   include:
-    language: python
-    python:
-    - '3.5'
-    - '3.6'
-    - '3.7'
-    - '3.8'
-    - '3.8-dev'
-    - '3.9'
-    - '3.9-dev'
-    - 'nightly'
+    
+    - name: CPython 3.7.3 on Ubuntu 16.04 (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.7.3
+
+    - name: CPython 3.7.2 on Ubuntu 16.04 (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.7.2
+
+    - name: CPython 3.7.1 on Ubuntu 16.04 (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.7.1
+
+    - name: CPython 3.7.0 on Ubuntu 16.04 (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.7.0
+
+    - name: CPython 3.6.8 on Ubuntu 16.04 (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.6.8
+
+    - name: CPython 3.6.7 on Ubuntu 16.04 (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.6.7
+
+    - name: CPython 3.6.6 on Ubuntu 16.04 (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.6.6
+
+    - name: CPython 3.6.5 on Ubuntu 16.04 (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.6.5
+
+    - name: CPython 3.6.4 on Ubuntu 16.04 (Xenial Xerus)
+      language: python
+      os: linux
+      dist: xenial
+      python: 3.6.4
 install: 
 script: python FooFinder/test.py
 deploy:
