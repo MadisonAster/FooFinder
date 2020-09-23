@@ -31,19 +31,25 @@ matrix:
       os: linux
       dist: xenial
       python: 3.8.1
-      if: tag IS present
-      deploy:
-      - provider: releases
-        token: $RELEASES_TOKEN
-        file_glob: true
-        file: dist/*
-        skip_cleanup: true
-        edge: true # opt in to dpl v2
-      - provider: pypi
-        distributions: sdist bdist_wheel
-        username: "__token__"
-        password: $PYPI_TOKEN
-        edge: true # opt in to dpl v2
-    install: 
+install: 
 script: 
   - python FooFinder/test.py
+  - if [[ "$TRAVIS_BUILD_STAGE_NAME" == "deployment" ]]; then export RUN_DEPLOY="true"; fi
+deploy:
+  - provider: releases
+    token: $RELEASES_TOKEN
+    file_glob: true
+    file: dist/*
+    skip_cleanup: true
+    on:
+      tags: true
+      condition: $RUN_DEPLOY = "true"
+    edge: true # opt in to dpl v2
+  - provider: pypi
+    distributions: sdist bdist_wheel
+    username: "__token__"
+    password: $PYPI_TOKEN
+    on:
+      tags: true
+      condition: $RUN_DEPLOY = "true"
+    edge: true # opt in to dpl v2
