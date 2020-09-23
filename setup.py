@@ -7,7 +7,7 @@ def readme():
     return filetext
 setup(
     name='FooFinder',
-    version='2.0.1',
+    version='2.0.2',
     description='A package designed to help you find foo.',
     long_description=readme(),
     long_description_content_type='text/markdown',
