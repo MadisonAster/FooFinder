@@ -33,10 +33,23 @@ def _folderwalker(cwd):
             if folder.rsplit('.',1)[-1] == 'egg-info':
                 continue
             yield root
-            
+
+def _find(cwd, name):
+    for root in _folderwalker(cwd):
+        path = os.path.join(root, name)
+        ppath = os.path.join(path, '__init__.py')
+        path = path+'.py'
+        if os.path.exists(path):
+            return path
+        if os.path.exists(ppath):
+            return ppath
+    else:
+        raise ImportError('FooFinder could not find '+name+' searching from '+cwd)
+
 def _import(name, *args, **kwargs):
-    if name != 'FooFinder' or not args[2]:
+    if 'FooFinder' not in name or not args[2]:
         return original_import(name, *args, **kwargs)
+    packagename = name.rsplit('.',1)[-1]
     name = args[2][0]
     if name in globals():
         return sys.modules['FooFinder']
@@ -51,16 +64,8 @@ def _import(name, *args, **kwargs):
         cwd = os.path.dirname(os.path.abspath(frame.f_globals['__file__']))
     except:
         cwd = os.getcwd()
-    for root in _folderwalker(cwd):
-        path = os.path.join(root, name)
-        ppath = os.path.join(path, '__init__.py')
-        path = path+'.py'
-        if os.path.exists(path):
-            _loadmodule(name, path)
-            break
-        if os.path.exists(ppath):
-            _loadmodule(name, ppath)
-            break
+    path = _find(cwd, name)
+    _loadmodule(name, path)
     return sys.modules['FooFinder']
 
 #replace builtin importer so the ugly hack below only has to run once
@@ -79,5 +84,3 @@ if context != None:
     if mname != '': #import FooFinder shouldn't run _import
         args = ('','',(mname,))
         _import('FooFinder', *args, frame=frame)
-
-
