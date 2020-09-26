@@ -50,6 +50,10 @@ class test_FooFinder(unittest.TestCase):
         from FooFinder.ExamplePackage import ExampleChildModule
         e = ExampleChildModule.ExamplePackageClass()
         self.assertEqual(e.ExampleAttribute, 'Hello Relative children!')
+    
+    def test_RelativeChildPackageAttributes(self):
+        from FooFinder.ExamplePackage import ExampleAttribute
+        self.assertEqual(ExampleAttribute, 'Hello Packages!')
         
     def test_RelativeChildImports2(self):
         from FooFinder.ExampleBaseModule2 import ExampleChildModule2
