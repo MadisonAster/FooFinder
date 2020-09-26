@@ -40,4 +40,47 @@ from FooFinder import MyNiftyPackage
 
 ### ***FooFinder can find the package you're currently in, a package from a parent directory, or a package from a child directory. Modules within packages will be found as if they were folders.***
 
+#### Using a parent package as a reference point:
+```
+ParentFolder/
+    __init__.py
+    SubFolder1/
+        TargetModule.py
+    SubFolder2/
+        SubSubFolder
+            CurrentModule.py
+
+from FooFinder.ParentFolder import TargetModule
+```        
+
+#### Using a neighboring package as a reference point:
+```   
+ParentFolder/
+    SubFolder1/
+        __init__.py
+        SubSubFolder/
+            TargetModule.py    
+    SubFolder2/
+        SubSubFolder/
+            CurrentNotebook.ipynb
+
+from FooFinder.SubFolder1 import TargetModule
+from FooFinder.SubFolder1 import SomePackageAttribute
+```
+
+#### Using a root module as a reference point:
+```
+ParentFolder/
+    RootModule.py
+    SubFolder1/
+        SubSubFolder/
+            TargetModule.py
+    SubFolder2/
+        SubSubFolder/
+            CurrentModule.py
+        
+from FooFinder.RootModule import TargetModule
+```
+
+
 *See the [test module](https://github.com/MadisonAster/FooFinder/blob/master/FooFinder/test.py) for example usage and complete test coverage.*
