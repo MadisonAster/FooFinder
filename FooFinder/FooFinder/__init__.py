@@ -18,6 +18,13 @@ def _folderwalker(cwd):
                         #python uses the dirs iterator to do it's walking
                         #so we have to sort if we want to find things in 
                         #order on all systems
+            for i, dir in reversed(list(enumerate(dirs))):
+                if dir[0] == '.':
+                    del dirs[i]
+                elif dir == '__pycache__':
+                    del dirs[i]
+                elif dir.rsplit('.',1)[-1] == 'egg-info':
+                    del dirs[i]
             folder = os.path.split(root)[-1]
             if folder in ['__pycache__']:
                 continue
@@ -65,9 +72,12 @@ frame = inspect.currentframe()
 while inspect.getframeinfo(frame).function != '_find_and_load':
     frame = frame.f_back
 frame = frame.f_back #go 1 more step back to get calling function
-context = inspect.getframeinfo(frame).code_context[0] #get line that called FooFinder
-mname = context.split('from FooFinder import ',1)[-1].split(' ')[0].split('#')[0].rstrip() #split on syntax
-if mname != '': #import FooFinder shouldn't run _import
-    args = ('','',(mname,))
-    _import('FooFinder', *args, frame=frame)
+context = inspect.getframeinfo(frame).code_context
+if context != None:
+    code = context[0] #get line that called FooFinder
+    mname = code.split('from FooFinder import ',1)[-1].split(' ')[0].split('#')[0].rstrip() #split on syntax
+    if mname != '': #import FooFinder shouldn't run _import
+        args = ('','',(mname,))
+        _import('FooFinder', *args, frame=frame)
+
 
