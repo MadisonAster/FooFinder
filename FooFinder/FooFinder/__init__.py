@@ -76,8 +76,11 @@ def _get_frame_code():
     frame = inspect.currentframe()
     context = None
     while context == None:
-        frame = _framedrag(frame, '_find_and_load')
-        context = inspect.getframeinfo(frame).code_context
+        try:
+            frame = _framedrag(frame, '_find_and_load')
+            context = inspect.getframeinfo(frame).code_context
+        except:
+            return None, None
     code = context[0].rstrip()
     return frame, code
 
@@ -94,6 +97,7 @@ def _first_run():
 
     #hack first run by doing some frame dragging because _bootstrap.exec_module doesn't give us *args
     frame, code = _get_frame_code() #get line of code that called FooFinder
+    if not code: return
     pname, mname = _parse_code(code) #parse package and module names from code
     if mname != 'FooFinder': #"import FooFinder" shouldn't run _import
         args = ('','',(mname,))
