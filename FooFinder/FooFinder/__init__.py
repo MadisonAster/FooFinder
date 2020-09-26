@@ -3,7 +3,7 @@ from importlib import machinery
 
 def _loadmodule(name, path):
     module = machinery.SourceFileLoader(name, path).load_module()
-    sys.modules[name] = module
+    #sys.modules[name] = module
     globals()[name] = module
     return module
 
@@ -15,17 +15,15 @@ def _folderwalker(cwd, down_only=False):
             yield root
 
     for root, dirs, files in os.walk(cwd):
-        dirs.sort() #some systems return unsorted directory listings
-                    #python uses the dirs iterator to do it's walking
-                    #so we have to sort if we want to find things in 
-                    #order on all systems
+        dirs.sort() #manipulate dirs iterator to restrain os.walk recursion
         for i, dir in reversed(list(enumerate(dirs))):
-            if dir[0] == '.':
+            if dir[0] == '.': #.git .hg etc
                 del dirs[i]
             elif dir == '__pycache__':
                 del dirs[i]
             elif dir.rsplit('.',1)[-1] == 'egg-info':
                 del dirs[i]
+        '''
         folder = os.path.split(root)[-1]
         if folder in ['__pycache__']:
             continue
@@ -33,6 +31,7 @@ def _folderwalker(cwd, down_only=False):
             continue
         if folder.rsplit('.',1)[-1] == 'egg-info':
             continue
+        '''
         yield root.replace('\\','/')
 
 def _find(cwd, name, down_only=False):
@@ -53,9 +52,9 @@ def _import(pname, *args, **kwargs):
     name = args[2][0]
     if name in globals():
         return sys.modules['FooFinder']
-    elif name in sys.modules:
-        globals()[name] = sys.modules[name]
-        return sys.modules['FooFinder']
+    #elif name in sys.modules:
+    #    globals()[name] = sys.modules[name]
+    #    return sys.modules['FooFinder']
     if 'frame' in kwargs:
         frame = kwargs['frame']
     else:
@@ -66,15 +65,15 @@ def _import(pname, *args, **kwargs):
         cwd = os.getcwd()
     spname = pname.rsplit('.',1)[-1]
     if spname != 'FooFinder': #relative child imports
-        if spname not in sys.modules:
+        if spname not in globals():
             packpath = _find(cwd, spname)
             _loadmodule(pname, packpath)
-        package = sys.modules[pname]
+        package = globals()[pname]
         if not hasattr(package, name):
             cwd = packpath.rsplit('/',1)[0]
             path = _find(cwd, name, down_only=True)
             _loadmodule(name, path)
-            setattr(package, name, sys.modules[name])
+            setattr(package, name, globals()[name])
         return package
     else:
         path = _find(cwd, name)
@@ -97,7 +96,7 @@ def _get_frame_code():
     return frame, code
 
 def _parse_code(code):
-    ##parsing these is hacky and lame...
+    #parsing these is hacky and lame...
     pname = code.split('from ',1)[-1].split(' import',1)[0]
     mname = code.split(' import ',1)[-1].split(' ')[0].split('#')[0].rstrip()
     return pname, mname
