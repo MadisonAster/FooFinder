@@ -77,26 +77,10 @@ def _get_frame_names():
     co_names = ()
     while len(co_names) == 0:
         frame = _framedrag(frame, '_find_and_load_unlocked')
-        #context = inspect.getframeinfo(frame).code_context
         co_names = frame.f_code.co_names
         co_varnames = frame.f_code.co_varnames
         f_code = frame.f_code
-        #print('co_names', co_names)
-        #print('f_code', f_code)
-        #print('co_argcount', f_code.co_argcount)
-        #print('co_posonlyargcount', f_code.co_posonlyargcount)
-        #print('co_kwonlyargcount', f_code.co_kwonlyargcount)
-        #print('co_lnotab', f_code.co_lnotab)
-        #print('co_nlocals', f_code.co_nlocals)
-        #print('co_freevars', f_code.co_freevars)
-        #print('co_flags', f_code.co_flags)
-        #print('co_firstlineno', f_code.co_firstlineno)
-        #print('co_varnames', f_code.co_varnames)
-        #print('co_filename', f_code.co_filename)
-        #print('co_consts', f_code.co_consts)
-        #print('co_code', f_code.co_code)
-        #print('f_code', dir(f_code))
-    
+        
     if 'FooFinder' in co_varnames: #import FooFinder
         return None, None, None
     for i, name in enumerate(co_names):
@@ -104,14 +88,6 @@ def _get_frame_names():
             break
     pname = co_names[i]
     mname = co_names[i+1]
-    #try:
-    #    context = inspect.getframeinfo(frame).code_context
-    #    code = context[0].rstrip()
-    #    print('code', code)
-    #except:
-    #    pass
-    #print('pname, mname', pname, ',', mname)
-    #print('-----------------------------------------')
     return frame, pname, mname
 
 def _first_run():
@@ -122,7 +98,6 @@ def _first_run():
     #hack first run by doing some frame dragging because _bootstrap.exec_module doesn't give us *args
     frame, pname, mname = _get_frame_names()
     if frame: #"import FooFinder" shouldn't run _import
-        #print('running!', mname)
         args = ('','',(mname,))
         _import(pname, *args, frame=frame)
 
