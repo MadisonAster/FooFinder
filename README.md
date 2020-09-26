@@ -76,12 +76,13 @@ ParentFolder/
     RootModule.py
     SubFolder1/
         SubSubFolder/
-            TargetModule.py
+            TargetPackage/
+                __init__.py
     SubFolder2/
         SubSubFolder/
             CurrentModule.py
         
-from FooFinder.RootModule import TargetModule
+from FooFinder.RootModule import TargetPackage
 ```
 
 ---
