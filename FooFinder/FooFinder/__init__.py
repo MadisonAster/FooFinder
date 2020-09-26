@@ -86,7 +86,8 @@ frame = frame.f_back #go 1 more step back to get calling function
 context = inspect.getframeinfo(frame).code_context
 if context != None:
     code = context[0] #get line that called FooFinder
+    packagename = code.split('from ',1)[-1].split(' import',1)[0]
     mname = code.split('from FooFinder import ',1)[-1].split(' ')[0].split('#')[0].rstrip() #split on syntax
-    if mname != '': #import FooFinder shouldn't run _import
+    if mname not in ['', 'import']: #import FooFinder shouldn't run _import
         args = ('','',(mname,))
-        _import('FooFinder', *args, frame=frame)
+        _import(packagename, *args, frame=frame)

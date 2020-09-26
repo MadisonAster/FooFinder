@@ -1,6 +1,19 @@
 import unittest
+import sys, builtins, copy
 
 class test_FooFinder(unittest.TestCase):
+    def setUp(self):
+        self.original_import = builtins.__import__
+        self.modulekeys = list(sys.modules.keys())
+        if 'FooFinder' in sys.modules: #just in case
+            del sys.modules['FooFinder']
+
+    def tearDown(self):
+        builtins.__import__ = self.original_import
+        for key in reversed(list(sys.modules.keys())):
+            if key not in self.modulekeys:
+                del sys.modules[key]
+    
     def test_UpstreamModules(self):
         from FooFinder import ExampleBaseModule #prove upstream imports work
         e = ExampleBaseModule.ExampleBaseClass()
@@ -22,7 +35,6 @@ class test_FooFinder(unittest.TestCase):
     
     def test_DownstreamTestCall(self):
         from FooFinder import PackageTestModule
-        print(PackageTestModule.test_ParentPackages)
         PackageTestModule.test_ParentPackages()
     
     def test_NameSpaces(self):
@@ -35,11 +47,15 @@ class test_FooFinder(unittest.TestCase):
         import inspect #prove we're only affecting FooFinder imports
         
     def test_RelativeChildImports(self):
+        print('test_RelativeChildImports')
+        import FooFinder
         from FooFinder.ExamplePackage import ExampleChildModule
         e = ExampleChildModule.ExamplePackageClass()
         self.assertEqual(e.ExampleAttribute, 'Hello Relative children!')
         
     def test_RelativeChildImports2(self):
+        print('test_RelativeChildImports2')
+        import FooFinder
         from FooFinder.ExampleBaseModule2 import ExampleChildModule2
         e = ExampleChildModule2.ExamplePackageClass()
         self.assertEqual(e.ExampleAttribute, 'Hello Relative children2!')
