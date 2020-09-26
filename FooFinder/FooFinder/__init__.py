@@ -47,10 +47,9 @@ def _find(cwd, name, down_only=False):
     else:
         raise ImportError('FooFinder could not find '+name+' searching from '+cwd)
 
-def _import(name, *args, **kwargs):
-    if 'FooFinder' not in name or not args[2]:
-        return original_import(name, *args, **kwargs)
-    packagename = name.rsplit('.',1)[-1]
+def _import(pname, *args, **kwargs):
+    if 'FooFinder' not in pname or not args[2]:
+        return original_import(pname, *args, **kwargs)
     name = args[2][0]
     if name in globals():
         return sys.modules['FooFinder']
@@ -65,29 +64,50 @@ def _import(name, *args, **kwargs):
         cwd = os.path.dirname(os.path.abspath(frame.f_globals['__file__']))
     except:
         cwd = os.getcwd()
-    if packagename != 'FooFinder':
-        packpath = _find(cwd, packagename)
-        cwd = packpath.rsplit('/',1)[0]
-        path = _find(cwd, name, down_only=True)
+    spname = pname.rsplit('.',1)[-1]
+    if spname != 'FooFinder': #relative child imports
+        if spname not in sys.modules:
+            packpath = _find(cwd, spname)
+            _loadmodule(pname, packpath)
+        package = sys.modules[pname]
+        if not hasattr(package, name):
+            cwd = packpath.rsplit('/',1)[0]
+            path = _find(cwd, name, down_only=True)
+            _loadmodule(name, path)
+            setattr(package, name, sys.modules[name])
+        return package
     else:
         path = _find(cwd, name)
-    _loadmodule(name, path)
+        _loadmodule(name, path)
     return sys.modules['FooFinder']
+
+def _framedrag(frame, functionname):
+    while inspect.getframeinfo(frame).function != '_find_and_load':
+        frame = frame.f_back
+    frame = frame.f_back #go 1 more step back to the actual function
+    return frame
+
+def _get_frame_code():
+    frame = inspect.currentframe()
+    context = None
+    while context == None:
+        frame = _framedrag(frame, '_find_and_load')
+        context = inspect.getframeinfo(frame).code_context
+    code = context[0].rstrip()
+    return frame, code
+
+def _parse_code(code):
+    ##parsing these is hacky and lame...
+    pname = code.split('from ',1)[-1].split(' import',1)[0]
+    mname = code.split(' import ',1)[-1].split(' ')[0].split('#')[0].rstrip()
+    return pname, mname
 
 #replace builtin importer so the ugly hack below only has to run once
 original_import = builtins.__import__
 builtins.__import__ = _import
-
-##this hack is lame...
-frame = inspect.currentframe()
-while inspect.getframeinfo(frame).function != '_find_and_load':
-    frame = frame.f_back
-frame = frame.f_back #go 1 more step back to get calling function
-context = inspect.getframeinfo(frame).code_context
-if context != None:
-    code = context[0] #get line that called FooFinder
-    packagename = code.split('from ',1)[-1].split(' import',1)[0]
-    mname = code.split('from FooFinder import ',1)[-1].split(' ')[0].split('#')[0].rstrip() #split on syntax
-    if mname not in ['', 'import']: #import FooFinder shouldn't run _import
-        args = ('','',(mname,))
-        _import(packagename, *args, frame=frame)
+    
+frame, code = _get_frame_code() #get line of code that called FooFinder
+pname, mname = _parse_code(code) #pars package and module names from code
+if mname != 'FooFinder': #import FooFinder shouldn't run _import
+    args = ('','',(mname,))
+    _import(pname, *args, frame=frame)

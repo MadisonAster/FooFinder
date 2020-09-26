@@ -47,15 +47,11 @@ class test_FooFinder(unittest.TestCase):
         import inspect #prove we're only affecting FooFinder imports
         
     def test_RelativeChildImports(self):
-        print('test_RelativeChildImports')
-        import FooFinder
         from FooFinder.ExamplePackage import ExampleChildModule
         e = ExampleChildModule.ExamplePackageClass()
         self.assertEqual(e.ExampleAttribute, 'Hello Relative children!')
         
     def test_RelativeChildImports2(self):
-        print('test_RelativeChildImports2')
-        import FooFinder
         from FooFinder.ExampleBaseModule2 import ExampleChildModule2
         e = ExampleChildModule2.ExamplePackageClass()
         self.assertEqual(e.ExampleAttribute, 'Hello Relative children2!')
