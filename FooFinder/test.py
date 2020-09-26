@@ -13,7 +13,7 @@ class test_FooFinder(unittest.TestCase):
         for key in reversed(list(sys.modules.keys())):
             if key not in self.modulekeys:
                 del sys.modules[key]
-    
+
     def test_UpstreamModules(self):
         from FooFinder import ExampleBaseModule #prove upstream imports work
         e = ExampleBaseModule.ExampleBaseClass()
@@ -24,11 +24,11 @@ class test_FooFinder(unittest.TestCase):
         from FooFinder import ExampleBaseModule2 #prove downstream imports work
         e = ExampleBaseModule2.ExampleBaseClass()
         self.assertEqual(e.ExampleAttribute, 'Hello World!')
-    
+
     def test_UpstreamPackages(self):
         from FooFinder import ExamplePackage #prove upstream packages work
         self.assertEqual(ExamplePackage.ExampleAttribute, 'Hello Packages!')
-    
+
     def test_DownstreamPackages(self):
         from FooFinder import TestPackage #prove downstream packages work
         self.assertEqual(TestPackage.ExampleAttribute1, 'Hello Downstream Packages!')
@@ -36,25 +36,25 @@ class test_FooFinder(unittest.TestCase):
     def test_DownstreamTestCall(self):
         from FooFinder import PackageTestModule
         PackageTestModule.test_ParentPackages()
-    
+
     def test_NameSpaces(self):
         from FooFinder import ExampleBaseModule as Ruth #prove namespaces work
         e = Ruth.ExampleBaseClass()
         self.assertEqual(e.ExampleAttribute, 'Hello World!')
-    
+
     def test_IrregularImport(self):
         import FooFinder #make sure this doesn't throw errors
         import inspect #prove we're only affecting FooFinder imports
-        
+
     def test_RelativeChildImports(self):
         from FooFinder.ExamplePackage import ExampleChildModule
         e = ExampleChildModule.ExamplePackageClass()
         self.assertEqual(e.ExampleAttribute, 'Hello Relative children!')
-    
+
     def test_RelativeChildPackageAttributes(self):
         from FooFinder.ExamplePackage import ExampleAttribute
         self.assertEqual(ExampleAttribute, 'Hello Packages!')
-        
+
     def test_RelativeChildImports2(self):
         from FooFinder.ExampleBaseModule2 import ExampleChildModule2
         e = ExampleChildModule2.ExamplePackageClass()
@@ -62,10 +62,9 @@ class test_FooFinder(unittest.TestCase):
 
     def test_ImportError(self):
         import traceback
-        try:
+        def run_test():
             from FooFinder import ExampleBaseModule3 #prove bad imports fail correctly
-        except ImportError:
-            pass #ImportError is what we expect
+        self.assertRaises(ImportError, run_test)
 
 if __name__ == '__main__':
     unittest.main()
