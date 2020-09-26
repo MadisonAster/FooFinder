@@ -67,9 +67,9 @@ def _import(pname, *args, **kwargs):
     return sys.modules['FooFinder']
 
 def _framedrag(frame, functionname):
-    while inspect.getframeinfo(frame).function != '_find_and_load':
+    while inspect.getframeinfo(frame).function != '_find_and_load_unlocked':
         frame = frame.f_back
-    frame = frame.f_back #go 1 more step back to the actual function
+    frame = frame.f_back.f_back #go 2 more steps back to the actual function
     return frame
 
 def _get_frame_code():
