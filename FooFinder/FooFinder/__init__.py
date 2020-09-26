@@ -30,7 +30,7 @@ def _folderwalker(cwd):
 def _import(name, *args, **kwargs):
     if name != 'FooFinder' or not args[2]:
         return original_import(name, *args, **kwargs)
-    name = args[2][0]
+    name = args[2][0].rstrip()
     if name in globals():
         return sys.modules['FooFinder']
     elif name in sys.modules:
@@ -40,7 +40,10 @@ def _import(name, *args, **kwargs):
         frame = kwargs['frame']
     else:
         frame = inspect.currentframe().f_back
-    cwd = os.path.dirname(os.path.abspath(frame.f_globals['__file__']))
+    try:
+        cwd = os.path.dirname(os.path.abspath(frame.f_globals['__file__']))
+    except:
+        cwd = os.getcwd()
     for root in _folderwalker(cwd):
         path = os.path.join(root, name)
         ppath = os.path.join(path, '__init__.py')
