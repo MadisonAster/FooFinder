@@ -67,25 +67,52 @@ def _import(pname, *args, **kwargs):
     return sys.modules['FooFinder']
 
 def _framedrag(frame, functionname):
-    while inspect.getframeinfo(frame).function != '_find_and_load_unlocked':
+    while inspect.getframeinfo(frame).function != functionname:
         frame = frame.f_back
     frame = frame.f_back.f_back #go 2 more steps back to the actual function
     return frame
 
-def _get_frame_code():
+def _get_frame_names():
     frame = inspect.currentframe()
-    context = None
-    while context == None:
-        frame = _framedrag(frame, '_find_and_load')
-        context = inspect.getframeinfo(frame).code_context
-    code = context[0].rstrip()
-    return frame, code
-
-def _parse_code(code):
-    #parsing these is hacky and lame...
-    pname = code.split('from ',1)[-1].split(' import',1)[0]
-    mname = code.split(' import ',1)[-1].split(' ')[0].split('#')[0].rstrip()
-    return pname, mname
+    co_names = ()
+    while len(co_names) == 0:
+        frame = _framedrag(frame, '_find_and_load_unlocked')
+        #context = inspect.getframeinfo(frame).code_context
+        co_names = frame.f_code.co_names
+        co_varnames = frame.f_code.co_varnames
+        f_code = frame.f_code
+        #print('co_names', co_names)
+        #print('f_code', f_code)
+        #print('co_argcount', f_code.co_argcount)
+        #print('co_posonlyargcount', f_code.co_posonlyargcount)
+        #print('co_kwonlyargcount', f_code.co_kwonlyargcount)
+        #print('co_lnotab', f_code.co_lnotab)
+        #print('co_nlocals', f_code.co_nlocals)
+        #print('co_freevars', f_code.co_freevars)
+        #print('co_flags', f_code.co_flags)
+        #print('co_firstlineno', f_code.co_firstlineno)
+        #print('co_varnames', f_code.co_varnames)
+        #print('co_filename', f_code.co_filename)
+        #print('co_consts', f_code.co_consts)
+        #print('co_code', f_code.co_code)
+        #print('f_code', dir(f_code))
+    
+    if 'FooFinder' in co_varnames: #import FooFinder
+        return None, None, None
+    for i, name in enumerate(co_names):
+        if 'FooFinder' in name:
+            break
+    pname = co_names[i]
+    mname = co_names[i+1]
+    #try:
+    #    context = inspect.getframeinfo(frame).code_context
+    #    code = context[0].rstrip()
+    #    print('code', code)
+    #except:
+    #    pass
+    #print('pname, mname', pname, ',', mname)
+    #print('-----------------------------------------')
+    return frame, pname, mname
 
 def _first_run():
     #replace python's builtin importer
@@ -93,22 +120,9 @@ def _first_run():
     builtins.__import__ = _import
 
     #hack first run by doing some frame dragging because _bootstrap.exec_module doesn't give us *args
-    if not _is_ipython() and _is_interactive():
-        frame = inspect.currentframe()
-        while inspect.getframeinfo(frame).function != '_find_and_load_unlocked':
-            frame = frame.f_back
-        frame = frame.f_back.f_back
-        #print('fframe', frame)
-        #print('fframe', dir(frame))
-        #print('fframe', dir(frame.f_code))
-        #print('fframe', frame.f_code)
-        print('fframe', frame.f_code.co_names)
-        pname, mname = frame.f_code.co_names
-        print('--------------------------')
-    else:
-        frame, code = _get_frame_code() #get line of code that called FooFinder
-        pname, mname = _parse_code(code) #parse package and module names from code
-    if mname != 'FooFinder': #"import FooFinder" shouldn't run _import
+    frame, pname, mname = _get_frame_names()
+    if frame: #"import FooFinder" shouldn't run _import
+        #print('running!', mname)
         args = ('','',(mname,))
         _import(pname, *args, frame=frame)
 

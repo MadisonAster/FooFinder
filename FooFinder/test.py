@@ -34,6 +34,7 @@ class test_FooFinder(unittest.TestCase):
         self.assertEqual(TestPackage.ExampleAttribute1, 'Hello Downstream Packages!')
     
     def test_DownstreamTestCall(self):
+        from pprint import pprint #import something to change co_names index count
         from FooFinder import PackageTestModule
         PackageTestModule.test_ParentPackages()
 
@@ -67,6 +68,7 @@ class test_FooFinder(unittest.TestCase):
         self.assertRaises(ImportError, run_test)
 
     def test_Flags(self):
+        from pprint import pprint
         import FooFinder
         self.assertEqual(FooFinder._is_interactive(), False)
         self.assertEqual(FooFinder._is_ipython(), False)
