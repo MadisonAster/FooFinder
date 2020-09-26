@@ -1,9 +1,8 @@
-import sys, os, builtins, inspect, traceback
+import sys, os, builtins, inspect
 from importlib import machinery
 
 def _loadmodule(name, path):
     module = machinery.SourceFileLoader(name, path).load_module()
-    #sys.modules[name] = module
     globals()[name] = module
     return module
 
@@ -13,7 +12,6 @@ def _folderwalker(cwd, down_only=False):
         for i in range(len(cwd.rsplit('/'))):
             root = cwd.rsplit('/',i)[0]
             yield root
-
     for root, dirs, files in os.walk(cwd):
         dirs.sort() #manipulate dirs iterator to restrain os.walk recursion
         for i, dir in reversed(list(enumerate(dirs))):
@@ -23,15 +21,6 @@ def _folderwalker(cwd, down_only=False):
                 del dirs[i]
             elif dir.rsplit('.',1)[-1] == 'egg-info':
                 del dirs[i]
-        '''
-        folder = os.path.split(root)[-1]
-        if folder in ['__pycache__']:
-            continue
-        if folder[0] == '.': #.git .hg etc
-            continue
-        if folder.rsplit('.',1)[-1] == 'egg-info':
-            continue
-        '''
         yield root.replace('\\','/')
 
 def _find(cwd, name, down_only=False):
@@ -52,9 +41,6 @@ def _import(pname, *args, **kwargs):
     name = args[2][0]
     if name in globals():
         return sys.modules['FooFinder']
-    #elif name in sys.modules:
-    #    globals()[name] = sys.modules[name]
-    #    return sys.modules['FooFinder']
     if 'frame' in kwargs:
         frame = kwargs['frame']
     else:
@@ -62,7 +48,7 @@ def _import(pname, *args, **kwargs):
     try:
         cwd = os.path.dirname(os.path.abspath(frame.f_globals['__file__']))
     except:
-        cwd = os.getcwd()
+        cwd = os.getcwd() #iPython needs this
     spname = pname.rsplit('.',1)[-1]
     if spname != 'FooFinder': #relative child imports
         if spname not in globals():
@@ -102,7 +88,7 @@ def _parse_code(code):
     return pname, mname
 
 def _first_run():
-    #replace builtin importer
+    #replace python's builtin importer
     globals()['original_import'] = builtins.__import__
     builtins.__import__ = _import
 
