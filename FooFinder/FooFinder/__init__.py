@@ -35,9 +35,15 @@ def _find(cwd, name, down_only=False):
     else:
         raise ImportError('FooFinder could not find '+name+' searching from '+cwd)
 
+def _is_ipython():
+    return hasattr(builtins, '__IPYTHON__')
+
+def _is_interactive():
+    return hasattr(sys, 'ps1')
+    
 def _import(pname, *args, **kwargs):
     if 'FooFinder' not in pname or not args[2]:
-        return globals()['original_import'](pname, *args, **kwargs)
+        return globals()['_original_import'](pname, *args, **kwargs)
     name = args[2][0]
     if name in globals():
         return sys.modules['FooFinder']
@@ -72,39 +78,26 @@ def _framedrag(frame, functionname):
     frame = frame.f_back.f_back #go 2 more steps back to the actual function
     return frame
 
-def _get_frame_names():
+def _first_run():
+    #replace python's builtin importer
+    globals()['_original_import'] = builtins.__import__
+    builtins.__import__ = _import
+
+    #hack first run by doing some frame dragging because _bootstrap.exec_module doesn't give us *args
     frame = inspect.currentframe()
     co_names = ()
     while len(co_names) == 0:
         frame = _framedrag(frame, '_find_and_load_unlocked')
         co_names = frame.f_code.co_names
-        co_varnames = frame.f_code.co_varnames
-        f_code = frame.f_code
-        
-    if 'FooFinder' in co_varnames: #import FooFinder
-        return None, None, None
+    if 'FooFinder' in frame.f_code.co_varnames: #import FooFinder
+        return
     for i, name in enumerate(co_names):
         if 'FooFinder' in name:
             break
     pname = co_names[i]
     mname = co_names[i+1]
-    return frame, pname, mname
-
-def _first_run():
-    #replace python's builtin importer
-    globals()['original_import'] = builtins.__import__
-    builtins.__import__ = _import
-
-    #hack first run by doing some frame dragging because _bootstrap.exec_module doesn't give us *args
-    frame, pname, mname = _get_frame_names()
     if frame: #"import FooFinder" shouldn't run _import
         args = ('','',(mname,))
         _import(pname, *args, frame=frame)
-
-def _is_ipython():
-    return hasattr(builtins, '__IPYTHON__')
-
-def _is_interactive():
-    return hasattr(sys, 'ps1')
 
 _first_run()

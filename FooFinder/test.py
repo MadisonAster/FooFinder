@@ -3,15 +3,15 @@ import sys, builtins, copy
 
 class test_FooFinder(unittest.TestCase):
     def setUp(self):
-        self.original_import = builtins.__import__
-        self.modulekeys = list(sys.modules.keys())
+        self._original_import = builtins.__import__
+        self._modulekeys = list(sys.modules.keys())
         if 'FooFinder' in sys.modules: #just in case
             del sys.modules['FooFinder']
 
     def tearDown(self):
-        builtins.__import__ = self.original_import
+        builtins.__import__ = self._original_import
         for key in reversed(list(sys.modules.keys())):
-            if key not in self.modulekeys:
+            if key not in self._modulekeys:
                 del sys.modules[key]
 
     def test_UpstreamModules(self):
