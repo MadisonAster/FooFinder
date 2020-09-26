@@ -102,12 +102,13 @@ def _parse_code(code):
     mname = code.split(' import ',1)[-1].split(' ')[0].split('#')[0].rstrip()
     return pname, mname
 
-#replace builtin importer so the ugly hack below only has to run once
+#replace builtin importer
 original_import = builtins.__import__
 builtins.__import__ = _import
     
+#hack first run by doing some frame dragging because _bootstrap.exec_module doesn't give us *args
 frame, code = _get_frame_code() #get line of code that called FooFinder
-pname, mname = _parse_code(code) #pars package and module names from code
-if mname != 'FooFinder': #import FooFinder shouldn't run _import
+pname, mname = _parse_code(code) #parse package and module names from code
+if mname != 'FooFinder': #"import FooFinder" shouldn't run _import
     args = ('','',(mname,))
     _import(pname, *args, frame=frame)
