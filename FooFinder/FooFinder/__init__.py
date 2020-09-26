@@ -75,7 +75,7 @@ def _import(pname, *args, **kwargs):
 def _framedrag(frame, functionname):
     while inspect.getframeinfo(frame).function != functionname:
         frame = frame.f_back
-    frame = frame.f_back.f_back #go 2 more steps back to the actual function
+    frame = frame.f_back #go 1 more step back to the actual function
     return frame
 
 def _get_frame():
@@ -83,6 +83,7 @@ def _get_frame():
     co_names = ()
     while len(co_names) == 0:
         frame = _framedrag(frame, '_find_and_load_unlocked')
+        frame = frame.f_back #_import is 1 more step back
         co_names = frame.f_code.co_names
     return frame
 
