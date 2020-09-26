@@ -66,5 +66,10 @@ class test_FooFinder(unittest.TestCase):
             from FooFinder import ExampleBaseModule3 #prove bad imports fail correctly
         self.assertRaises(ImportError, run_test)
 
+    def test_Flags(self):
+        import FooFinder
+        self.assertEqual(FooFinder._is_interactive(), False)
+        self.assertEqual(FooFinder._is_ipython(), False)
+        
 if __name__ == '__main__':
     unittest.main()

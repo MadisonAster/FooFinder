@@ -45,10 +45,10 @@ def _import(pname, *args, **kwargs):
         frame = kwargs['frame']
     else:
         frame = inspect.currentframe().f_back
-    try:
+    if _is_ipython() or _is_interactive():
+        cwd = os.getcwd()
+    else:
         cwd = os.path.dirname(os.path.abspath(frame.f_globals['__file__']))
-    except:
-        cwd = os.getcwd() #iPython needs this
     spname = pname.rsplit('.',1)[-1]
     if spname != 'FooFinder': #relative child imports
         if spname not in globals():
@@ -76,11 +76,8 @@ def _get_frame_code():
     frame = inspect.currentframe()
     context = None
     while context == None:
-        try:
-            frame = _framedrag(frame, '_find_and_load')
-            context = inspect.getframeinfo(frame).code_context
-        except:
-            return None, None
+        frame = _framedrag(frame, '_find_and_load')
+        context = inspect.getframeinfo(frame).code_context
     code = context[0].rstrip()
     return frame, code
 
@@ -96,11 +93,29 @@ def _first_run():
     builtins.__import__ = _import
 
     #hack first run by doing some frame dragging because _bootstrap.exec_module doesn't give us *args
-    frame, code = _get_frame_code() #get line of code that called FooFinder
-    if not code: return
-    pname, mname = _parse_code(code) #parse package and module names from code
+    if not _is_ipython() and _is_interactive():
+        frame = inspect.currentframe()
+        while inspect.getframeinfo(frame).function != '_find_and_load_unlocked':
+            frame = frame.f_back
+        frame = frame.f_back.f_back
+        #print('fframe', frame)
+        #print('fframe', dir(frame))
+        #print('fframe', dir(frame.f_code))
+        #print('fframe', frame.f_code)
+        print('fframe', frame.f_code.co_names)
+        pname, mname = frame.f_code.co_names
+        print('--------------------------')
+    else:
+        frame, code = _get_frame_code() #get line of code that called FooFinder
+        pname, mname = _parse_code(code) #parse package and module names from code
     if mname != 'FooFinder': #"import FooFinder" shouldn't run _import
         args = ('','',(mname,))
         _import(pname, *args, frame=frame)
+
+def _is_ipython():
+    return hasattr(builtins, '__IPYTHON__')
+
+def _is_interactive():
+    return hasattr(sys, 'ps1')
 
 _first_run()
