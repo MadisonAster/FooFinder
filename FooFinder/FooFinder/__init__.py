@@ -78,26 +78,29 @@ def _framedrag(frame, functionname):
     frame = frame.f_back.f_back #go 2 more steps back to the actual function
     return frame
 
+def _get_frame():
+    frame = inspect.currentframe()
+    co_names = ()
+    while len(co_names) == 0:
+        frame = _framedrag(frame, '_find_and_load_unlocked')
+        co_names = frame.f_code.co_names
+    return frame
+
 def _first_run():
     #replace python's builtin importer
     globals()['_original_import'] = builtins.__import__
     builtins.__import__ = _import
 
     #hack first run by doing some frame dragging because _bootstrap.exec_module doesn't give us *args
-    frame = inspect.currentframe()
-    co_names = ()
-    while len(co_names) == 0:
-        frame = _framedrag(frame, '_find_and_load_unlocked')
-        co_names = frame.f_code.co_names
+    frame = _get_frame()
     if 'FooFinder' in frame.f_code.co_varnames: #import FooFinder
         return
-    for i, name in enumerate(co_names):
+    for i, name in enumerate(frame.f_code.co_names):
         if 'FooFinder' in name:
             break
-    pname = co_names[i]
-    mname = co_names[i+1]
-    if frame: #"import FooFinder" shouldn't run _import
-        args = ('','',(mname,))
-        _import(pname, *args, frame=frame)
+    pname = frame.f_code.co_names[i]
+    mname = frame.f_code.co_names[i+1]
+    args = ('','',(mname,))
+    return _import(pname, *args, frame=frame)
 
 _first_run()
