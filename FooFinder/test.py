@@ -33,6 +33,16 @@ class test_FooFinder(unittest.TestCase):
     def test_IrregularImport(self):
         import FooFinder #make sure this doesn't throw errors
         import inspect #prove we're only affecting FooFinder imports
+        
+    def test_RelativeChildImports(self):
+        from FooFinder.ExamplePackage import ExampleChildModule
+        e = ExampleChildModule.ExamplePackageClass()
+        self.assertEqual(e.ExampleAttribute, 'Hello Relative children!')
+        
+    def test_RelativeChildImports2(self):
+        from FooFinder.ExampleBaseModule2 import ExampleChildModule2
+        e = ExampleChildModule2.ExamplePackageClass()
+        self.assertEqual(e.ExampleAttribute, 'Hello Relative children2!')
 
     def test_ImportError(self):
         import traceback

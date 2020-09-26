@@ -7,37 +7,38 @@ def _loadmodule(name, path):
     globals()[name] = module
     return module
 
-def _folderwalker(cwd):
+def _folderwalker(cwd, down_only=False):
     cwd = cwd.replace('\\','/').rstrip('/')
-    for i in range(len(cwd.rsplit('/'))):
-        root = cwd.rsplit('/',i)[0]
-        yield root
-    else:
-        for root, dirs, files in os.walk(cwd):
-            dirs.sort() #some systems return unsorted directory listings
-                        #python uses the dirs iterator to do it's walking
-                        #so we have to sort if we want to find things in 
-                        #order on all systems
-            for i, dir in reversed(list(enumerate(dirs))):
-                if dir[0] == '.':
-                    del dirs[i]
-                elif dir == '__pycache__':
-                    del dirs[i]
-                elif dir.rsplit('.',1)[-1] == 'egg-info':
-                    del dirs[i]
-            folder = os.path.split(root)[-1]
-            if folder in ['__pycache__']:
-                continue
-            if folder[0] == '.': #.git .hg etc
-                continue
-            if folder.rsplit('.',1)[-1] == 'egg-info':
-                continue
+    if not down_only:
+        for i in range(len(cwd.rsplit('/'))):
+            root = cwd.rsplit('/',i)[0]
             yield root
 
-def _find(cwd, name):
-    for root in _folderwalker(cwd):
-        path = os.path.join(root, name)
-        ppath = os.path.join(path, '__init__.py')
+    for root, dirs, files in os.walk(cwd):
+        dirs.sort() #some systems return unsorted directory listings
+                    #python uses the dirs iterator to do it's walking
+                    #so we have to sort if we want to find things in 
+                    #order on all systems
+        for i, dir in reversed(list(enumerate(dirs))):
+            if dir[0] == '.':
+                del dirs[i]
+            elif dir == '__pycache__':
+                del dirs[i]
+            elif dir.rsplit('.',1)[-1] == 'egg-info':
+                del dirs[i]
+        folder = os.path.split(root)[-1]
+        if folder in ['__pycache__']:
+            continue
+        if folder[0] == '.': #.git .hg etc
+            continue
+        if folder.rsplit('.',1)[-1] == 'egg-info':
+            continue
+        yield root.replace('\\','/')
+
+def _find(cwd, name, down_only=False):
+    for root in _folderwalker(cwd, down_only=down_only):
+        path = os.path.join(root, name).replace('\\','/')
+        ppath = os.path.join(path, '__init__.py').replace('\\','/')
         path = path+'.py'
         if os.path.exists(path):
             return path
@@ -64,7 +65,12 @@ def _import(name, *args, **kwargs):
         cwd = os.path.dirname(os.path.abspath(frame.f_globals['__file__']))
     except:
         cwd = os.getcwd()
-    path = _find(cwd, name)
+    if packagename != 'FooFinder':
+        packpath = _find(cwd, packagename)
+        cwd = packpath.rsplit('/',1)[0]
+        path = _find(cwd, name, down_only=True)
+    else:
+        path = _find(cwd, name)
     _loadmodule(name, path)
     return sys.modules['FooFinder']
 
