@@ -30,7 +30,7 @@ def _folderwalker(cwd):
 def _import(name, *args, **kwargs):
     if name != 'FooFinder' or not args[2]:
         return original_import(name, *args, **kwargs)
-    name = args[2][0].rstrip()
+    name = args[2][0]
     if name in globals():
         return sys.modules['FooFinder']
     elif name in sys.modules:
@@ -66,7 +66,7 @@ while inspect.getframeinfo(frame).function != '_find_and_load':
     frame = frame.f_back
 frame = frame.f_back #go 1 more step back to get calling function
 context = inspect.getframeinfo(frame).code_context[0] #get line that called FooFinder
-mname = context.split('from FooFinder import ',1)[-1].split(' ')[0].split('#')[0] #split on syntax
+mname = context.split('from FooFinder import ',1)[-1].split(' ')[0].split('#')[0].rstrip() #split on syntax
 if mname != '': #import FooFinder shouldn't run _import
     args = ('','',(mname,))
     _import('FooFinder', *args, frame=frame)
