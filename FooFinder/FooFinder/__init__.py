@@ -4,6 +4,7 @@ from importlib import machinery
 def _loadmodule(name, path):
     module = machinery.SourceFileLoader(name, path).load_module()
     globals()[name] = module
+    sys.modules[name] = module
     return module
 
 def _folderwalker(cwd, down_only=False):
@@ -27,11 +28,14 @@ def _find(cwd, name, down_only=False):
     for root in _folderwalker(cwd, down_only=down_only):
         path = os.path.join(root, name).replace('\\','/')
         ppath = os.path.join(path, '__init__.py').replace('\\','/')
-        path = path+'.py'
-        if os.path.exists(path):
-            return path
-        if os.path.exists(ppath):
+        pppath = os.path.join(root, '__init__.py').replace('\\','/')
+        path += '.py'
+        if os.path.exists(pppath) and os.path.split(root)[1] == name:
+            return pppath
+        elif os.path.exists(ppath):
             return ppath
+        elif os.path.exists(path):
+            return path
     else:
         raise ImportError('FooFinder could not find '+name+' searching from '+cwd)
 
@@ -75,7 +79,7 @@ def _import(pname, *args, **kwargs):
 def _framedrag(frame, functionname):
     while inspect.getframeinfo(frame).function != functionname:
         frame = frame.f_back
-    frame = frame.f_back #go 1 more step back to the actual function
+    frame = frame.f_back.f_back #go 2 more steps back to the actual function
     return frame
 
 def _get_frame():
@@ -83,7 +87,6 @@ def _get_frame():
     co_names = ()
     while len(co_names) == 0:
         frame = _framedrag(frame, '_find_and_load_unlocked')
-        frame = frame.f_back #_import is 1 more step back
         co_names = frame.f_code.co_names
     return frame
 
