@@ -40,8 +40,9 @@ class test_FooFinder(unittest.TestCase):
         
     def test_UpstreamPackageRelativity(self):
         from pprint import pprint #import something to change co_names index count
-        from FooFinder.ExamplePackage import ExamplePackageModule
-        ExamplePackageModule.test_ParentPackages()
+        from FooFinder import ExamplePackage
+        import ExamplePackage.ExamplePackageModule as ExamplePackageModule
+        self.assertEqual(ExamplePackageModule.ExampleSideAttr, 42)
 
     def test_NameSpaces(self):
         from FooFinder import ExampleBaseModule as Ruth #prove namespaces work
