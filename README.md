@@ -47,10 +47,10 @@ from FooFinder import MyNiftyPackage
 ParentFolder/
     __init__.py
     SubFolder1/
-        TargetModule.py #<- and you want to import this
+        TargetModule.py                     <- and you want to import this module
     SubFolder2/
         SubSubFolder/
-            CurrentModule.py #<- you are here
+            CurrentModule.py                <- you are here
 
 from FooFinder.ParentFolder import TargetModule
 ```        
@@ -61,10 +61,10 @@ ParentFolder/
     SubFolder1/
         __init__.py
         SubSubFolder/
-            TargetModule.py #<- and you want to import that
+            TargetModule.py                 <- and you want to import that
     SubFolder2/
         SubSubFolder/
-            CurrentNotebook.ipynb #<- you are here
+            CurrentNotebook.ipynb           <- you are here
 
 from FooFinder.SubFolder1 import TargetModule
 from FooFinder.SubFolder1 import SomePackageAttribute
@@ -76,11 +76,11 @@ ParentFolder/
     RootModule.py
     SubFolder1/
         SubSubFolder/
-            TargetPackage/ #<- and you want to import this
+            TargetPackage/                  <- and you want to import this package
                 __init__.py
     SubFolder2/
         SubSubFolder/
-            CurrentModule.py #<- you are here
+            CurrentModule.py                <- you are here
         
 from FooFinder.RootModule import TargetPackage
 ```
