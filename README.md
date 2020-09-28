@@ -1,5 +1,6 @@
 
 
+
 ![PyPI](https://img.shields.io/pypi/v/FooFinder)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/FooFinder)
 [![Build Status](https://travis-ci.org/MadisonAster/FooFinder.svg?branch=master)](https://travis-ci.org/MadisonAster/FooFinder)
@@ -126,7 +127,7 @@ from FooFinder.RootModule import TargetPackage
 ---
 ## Limitations:
 
-FooFinder will not search directories that start with a "." such as .git or .hg, it will also skip any egg-info or \_\_pycache__ folders. FooFinder will try each possible parent path to your module, with os.path.exists without retrieveing a directory listing. It will not recurse the parent folders. It will only recurse downwards from either your current module, or a reference point. 
+FooFinder will not search directories that start with a "." such as .git or .hg, it will also skip any egg-info or \_\_pycache__ folders. FooFinder will try each possible parent path to your module with os.path.exists instead of retrieving a directory listing. It will not recurse the parent folders. If none of the parent paths exist it will then recursively try each path downwards from your current module. If you're using a reference point, it will first find the reference point,  and then search only downwards from the reference point.
 
 If a user has modules or packages installed at the root of their system that have the same name you're trying to import, there could be a conflict. However this would be a very strange system configuration to have, so the risk of this should be quite minimal.
 
