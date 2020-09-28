@@ -46,7 +46,7 @@ def _is_interactive():
     return hasattr(sys, 'ps1')
     
 def _import(pname, *args, **kwargs):
-    if 'FooFinder' not in pname or not args[2]:
+    if 'FooFinder' not in pname or len(args)< 3 or not args[2]:
         return globals()['_original_import'](pname, *args, **kwargs)
     name = args[2][0]
     if name in globals():
