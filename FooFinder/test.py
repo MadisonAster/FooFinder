@@ -69,10 +69,12 @@ class test_FooFinder(unittest.TestCase):
 
     def test_ZippedModuleImport(self):
         from FooFinder.ZippedPackage import ZippedModule
+        #from ZippedPackage import ZippedModule
         self.assertEqual(ZippedModule.Attribute, 'Hello ZippedModules!')
         
     def test_ZippedPackageImport(self):
         from FooFinder import ZippedPackage
+        #import ZippedPackage
         self.assertEqual(ZippedPackage.Attribute, 'ZippedPackageAttribute')
        
     def test_ImportError(self):
