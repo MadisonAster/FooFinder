@@ -67,6 +67,14 @@ class test_FooFinder(unittest.TestCase):
         e = ExampleChildModule2.ExamplePackageClass()
         self.assertEqual(e.ExampleAttribute, 'Hello Relative children2!')
 
+    def test_ZippedModuleImport(self):
+        from FooFinder.ZippedPackage import ZippedModule
+        self.assertEqual(ZippedModule.Attribute, 'Hello ZippedModules!')
+        
+    def test_ZippedPackageImport(self):
+        from FooFinder import ZippedPackage
+        self.assertEqual(ZippedPackage.Attribute, 'ZippedPackageAttribute')
+       
     def test_ImportError(self):
         import traceback
         def run_test():

@@ -1,0 +1,1 @@
+Attribute = 'Hello ZippedModules!'
