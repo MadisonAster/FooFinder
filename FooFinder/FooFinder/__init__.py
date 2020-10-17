@@ -1,11 +1,18 @@
 import sys, os, builtins, inspect
 from importlib import machinery
+import zipimport
 
 def _loadmodule(name, path):
-    module = machinery.SourceFileLoader(name, path).load_module()
-    globals()[name] = module
-    sys.modules[name] = module
-    return module
+    if path.rsplit('.',1)[-1] == 'zip':
+        zpackage = zipimport.zipimporter(path)
+        globals()[name] = zpackage
+        sys.modules[name] = zpackage
+        return zpackage
+    else:
+        module = machinery.SourceFileLoader(name, path).load_module()
+        globals()[name] = module
+        sys.modules[name] = module
+        return module
 
 def _folderwalker(cwd, down_only=False):
     cwd = cwd.replace('\\','/').rstrip('/')
@@ -24,11 +31,12 @@ def _folderwalker(cwd, down_only=False):
                 del dirs[i]
         yield root.replace('\\','/')
 
-def _find(cwd, name, down_only=False):
+def _find(cwd, name, down_only=False, zip=False):
     for root in _folderwalker(cwd, down_only=down_only):
         path = os.path.join(root, name).replace('\\','/')
         ppath = os.path.join(path, '__init__.py').replace('\\','/')
         pppath = os.path.join(root, '__init__.py').replace('\\','/')
+        zpath = path+'.zip'
         path += '.py'
         if os.path.exists(pppath) and os.path.split(root)[1] == name:
             return pppath
@@ -36,6 +44,8 @@ def _find(cwd, name, down_only=False):
             return ppath
         elif os.path.exists(path):
             return path
+        elif zip and os.path.exists(zpath):
+            return zpath            
     else:
         raise ImportError('FooFinder could not find '+name+' searching from '+cwd)
 
@@ -62,9 +72,15 @@ def _import(pname, *args, **kwargs):
     spname = pname.rsplit('.',1)[-1]
     if spname != 'FooFinder': #relative child imports
         if spname not in globals():
-            packpath = _find(cwd, spname)
-            _loadmodule(pname, packpath)
-        package = globals()[pname]
+            packpath = _find(cwd, spname, zip=True)
+            package = _loadmodule(spname, packpath)
+            if packpath.rsplit('.',1)[-1] == 'zip':
+                zmodule = package.load_module(name)
+                setattr(package, name, zmodule)
+            globals()[pname] = package #_original_import support
+            sys.modules[pname] = package #_original_import support
+        else:
+            package = globals()[spname]
         if not hasattr(package, name):
             cwd = packpath.rsplit('/',1)[0]
             path = _find(cwd, name, down_only=True)

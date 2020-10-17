@@ -1,5 +1,6 @@
 import unittest
-import sys, builtins, copy
+import os, sys, builtins, copy
+import zipimport
 
 class test_FooFinder(unittest.TestCase):
     def setUp(self):
@@ -69,13 +70,17 @@ class test_FooFinder(unittest.TestCase):
 
     def test_ZippedModuleImport(self):
         from FooFinder.ZippedPackage import ZippedModule
-        #from ZippedPackage import ZippedModule
         self.assertEqual(ZippedModule.Attribute, 'Hello ZippedModules!')
         
     def test_ZippedPackageImport(self):
-        from FooFinder import ZippedPackage
-        #import ZippedPackage
+        from FooFinder.ZippedPackage import ZippedPackage
         self.assertEqual(ZippedPackage.Attribute, 'ZippedPackageAttribute')
+        
+        #Leaving for reference:
+        #cwd = os.path.dirname(os.path.abspath(__file__))
+        #importer = zipimport.zipimporter(cwd+'/ZippedPackage.zip')
+        #sys.modules['ZippedPackage']=importer.load_module('ZippedPackage')
+        #import ZippedPackage
        
     def test_ImportError(self):
         import traceback
