@@ -78,7 +78,10 @@ def _import(pname, *args, **kwargs):
             package = _loadmodule(spname, packpath)
             if packpath.rsplit('.',1)[-1] == 'zip':
                 zmodule = package.load_module(name)
-                setattr(package, name, zmodule)
+                class zpackage:
+                    zpackage = package
+                setattr(zpackage, name, zmodule)
+                package = zpackage
             globals()[pname] = package #_original_import support
             sys.modules[pname] = package #_original_import support
         else:
