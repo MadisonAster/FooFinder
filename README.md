@@ -124,10 +124,28 @@ ParentFolder/
 ```
 from FooFinder.RootModule import TargetPackage
 ```
+
+#### Importing Modules and Packages from a zip file:
+```
+ParentFolder/
+    ZippedFile.zip/
+        ZippedPackage/                      <- and you want to import this zipped package
+            __init__.py
+        ZippedModule.py                     <- or this zipped module
+    SubFolder1/
+        SubFolder2/
+            CurrentModule.py         <- you are here
+```
+```
+from FooFinder.ZippedFile import ZippedPackage
+from FooFinder.ZippedFile import ZippedModule
+```
 ---
 ## Limitations:
 
 FooFinder will not search directories that start with a "." such as .git or .hg, it will also skip any egg-info or \_\_pycache__ folders. FooFinder will try each possible parent path to your module with os.path.exists instead of retrieving a directory listing. It will not recurse the parent folders. If none of the parent paths exist it will then recursively try each path downwards from your current module. If you're using a reference point, it will first find the reference point,  and then search only downwards from the reference point.
+
+Zip importing uses zipimport.zipimporter.load_module so it's limited to just what zipimporter can see, and can't recursively search the contents of the zip file.
 
 If a user has modules or packages installed at the root of their system that have the same name you're trying to import, there could be a conflict. However this would be a very strange system configuration to have, so the risk of this should be quite minimal.
 
