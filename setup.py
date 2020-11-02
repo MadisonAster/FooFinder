@@ -7,7 +7,7 @@ def readme():
     return filetext
 setup(
     name='FooFinder',
-    version='3.0.6',
+    version='3.0.7',
     description='A package designed to help you find foo.',
     long_description=readme(),
     long_description_content_type='text/markdown',
@@ -30,7 +30,7 @@ setup(
             'Programming Language :: Python :: 3.9',
             ],
 
-    keywords='staticframe pandas numpy immutable array',
+    keywords='relative imports importing recursive',
     package_dir = {'': 'FooFinder'},
     packages=['FooFinder'],
 )
