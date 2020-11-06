@@ -39,7 +39,7 @@ env:
     #- CIBW_TEST_COMMAND="python -m unittest discover -f -s {project}/tests"
     # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
 install:
-  - python3 -m pip install -r requirements.txt
+  #- python3 -m pip install -r requirements.txt
   #- python3 -m pip install cibuildwheel==1.6.4
 script:
   ## unittest
