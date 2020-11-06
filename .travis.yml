@@ -1,14 +1,4 @@
 language: python
-python:
-    #- "2.7"
-    #- "3.3"
-    #- "3.4"
-    #- "3.5"
-    - "3.6"
-    - "3.7"
-    - "3.8"
-    #- "3.9"
-    #- "nightly"
 jobs:
   include:
     ## linux build
@@ -29,7 +19,9 @@ jobs:
     ## osx build
     - os: osx
       # PyPy 7.3.2 needs macOS >= 10.14
-      osx_image: xcode10.2
+      osx_image: xcode12u
+      #osx_image: xcode11.3
+      #osx_image: xcode10.2
       #language: shell
       language: shell
     
