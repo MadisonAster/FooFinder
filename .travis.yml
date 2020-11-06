@@ -1,389 +1,61 @@
-# Copying from: https://github.com/brandtbucher/travis-python-matrix
-
-matrix:
+language: python
+jobs:
   include:
-    - name: CPython nightly on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: nightly
+    ## linux build
+    - services: docker
     
-    - name: CPython 3.8-dev on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.8-dev
-
-    - name: CPython 3.8.0 on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.8.0
-
-    - name: CPython 3.7-dev on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.7-dev
-      
-    - name: CPython 3.7.0 on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.7.0
-
-    - name: CPython 3.6-dev on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.6-dev
-      
-    - name: CPython 3.6.1 on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.6.1
-
-    - name: CPython 3.5-dev on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.5-dev
-      
-    - name: CPython 3.5.2 on Ubuntu (Xenial Xerus)
-      language: python
-      os: linux
-      dist: xenial
-      python: 3.5.2
+    ## linux ARMv8 build
+    #- services: docker
+    #  arch: arm64
     
-    - name: CPython 3.8.5 on Windows 10 (64-bit)
+    ## linux PPC64LE build
+    #- services: docker
+    #  arch: ppc64le
+    
+    ## linux S390X build
+    #- services: docker
+    #  arch: s390x
+    
+    ## osx build
+    - os: osx
+      # PyPy 7.3.2 needs macOS >= 10.14
+      osx_image: xcode10.2
       language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.8.5
-
-    - name: CPython 3.8.0 on Windows 10 (64-bit)
+    
+    ## windows build
+    - os: windows
       language: shell
-      os: windows
       before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
         - choco install python --version 3.8.0
-
-    - name: CPython 3.7.9 on Windows 10 (64-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
-        - choco install python --version 3.7.9
-
-    - name: CPython 3.7.0 on Windows 10 (64-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
-        - choco install python --version 3.7.0
-
-    - name: CPython 3.6.8 on Windows 10 (64-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
-        - choco install python --version 3.6.8
-
-    - name: CPython 3.6.1 on Windows 10 (64-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
-        - choco install python --version 3.6.1
-
-    - name: CPython 3.5.4 on Windows 10 (64-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5.4.20200110
-        
-    - name: CPython 3.5.2 on Windows 10 (64-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5.2.20161029
-        
-    - name: CPython 3.8.5 on Windows 10 (32-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.8.5 --x86
-
-    - name: CPython 3.8.0 on Windows 10 (32-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - choco install python --version 3.8.0 --x86
-
-    - name: CPython 3.7.9 on Windows 10 (32-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
-        - choco install python --version 3.7.9 --x86
-
-    - name: CPython 3.7.0 on Windows 10 (32-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
-        - choco install python --version 3.7.0 --x86
-
-    - name: CPython 3.6.8 on Windows 10 (32-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
-        - choco install python --version 3.6.8 --x86
-
-    - name: CPython 3.6.1 on Windows 10 (32-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python36:/c/Python36/Scripts:$PATH
-        - choco install python --version 3.6.1 --x86
-
-    - name: CPython 3.5.4 on Windows 10 (32-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5.4.20200110 --x86
-        
-    - name: CPython 3.5.2 on Windows 10 (32-bit)
-      language: shell
-      os: windows
-      before_install:
-        - export PATH=/c/Python35:/c/Python35/Scripts:$PATH
-        - choco install python --version 3.5.2.20161029 --x86
-    
-    - name: CPython 3.8-dev on macOS 10.15 (Catalina)
-      language: shell
-      os: osx
-      osx_image: xcode12u
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8-dev
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-    
-    - name: CPython 3.8.0 on macOS 10.15 (Catalina)
-      language: shell
-      os: osx
-      osx_image: xcode12u
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-
-    - name: CPython 3.7-dev on macOS 10.15 (Catalina)
-      language: shell
-      os: osx
-      osx_image: xcode12u
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7-dev
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-
-    - name: CPython 3.7.0 on macOS 10.15 (Catalina)
-      language: shell
-      os: osx
-      osx_image: xcode12u
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-
-    - name: CPython 3.6-dev on macOS 10.15 (Catalina)
-      language: shell
-      os: osx
-      osx_image: xcode12u
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6-dev
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-        
-    - name: CPython 3.6.1 on macOS 10.15 (Catalina)
-      language: shell
-      os: osx
-      osx_image: xcode12u
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.1
-        - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
-        
-    - name: CPython 3.5-dev on macOS 10.15 (Catalina)
-      language: shell
-      os: osx
-      osx_image: xcode12u
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5-dev
-        - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
-
-    - name: CPython 3.5.3 on macOS 10.15 (Catalina)
-      language: shell
-      os: osx
-      osx_image: xcode12u
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.3
-        - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
-  
-    - name: CPython 3.8-dev on macOS 10.14 (Mojave)
-      language: shell
-      os: osx
-      osx_image: xcode11.3
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8-dev
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-    
-    - name: CPython 3.8.0 on macOS 10.14 (Mojave)
-      language: shell
-      os: osx
-      osx_image: xcode11.3
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-    
-    - name: CPython 3.7-dev on macOS 10.14 (Mojave)
-      language: shell
-      os: osx
-      osx_image: xcode11.3
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7-dev
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-
-    - name: CPython 3.7 on macOS 10.14 (Mojave)
-      language: shell
-      os: osx
-      osx_image: xcode11.3
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-
-    - name: CPython 3.6-dev on macOS 10.14 (Mojave)
-      language: shell
-      os: osx
-      osx_image: xcode11.3
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6-dev
-        - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
-    
-    - name: CPython 3.6.1 on macOS 10.14 (Mojave)
-      language: shell
-      os: osx
-      osx_image: xcode11.3
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.1
-        - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
-    
-    - name: CPython 3.5-dev on macOS 10.14 (Mojave)
-      language: shell
-      os: osx
-      osx_image: xcode11.3
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5-dev
-        - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
-    
-    - name: CPython 3.5.3 on macOS 10.14 (Mojave)
-      language: shell
-      os: osx
-      osx_image: xcode11.3
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.3
-        - CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install $PYENV_VERSION
-
-    - name: CPython 3.8-dev on macOS 10.13 (High Sierra)
-      language: shell
-      os: osx
-      osx_image: xcode10.1
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8-dev
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-
-    - name: CPython 3.8.0 on macOS 10.13 (High Sierra)
-      language: shell
-      os: osx
-      osx_image: xcode10.1
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-
-    - name: CPython 3.7-dev on macOS 10.13 (High Sierra)
-      language: shell
-      os: osx
-      osx_image: xcode10.1
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7-dev
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-    
-    - name: CPython 3.7.0 on macOS 10.13 (High Sierra)
-      language: shell
-      os: osx
-      osx_image: xcode10.1
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-        
-    - name: CPython 3.6-dev on macOS 10.13 (High Sierra)
-      language: shell
-      os: osx
-      osx_image: xcode10.1
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6-dev
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-
-    - name: CPython 3.6.1 on macOS 10.13 (High Sierra)
-      language: shell
-      os: osx
-      osx_image: xcode10.1
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.6.1
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
-        
-    - name: CPython 3.5-dev on macOS 10.13 (High Sierra)
-      language: shell
-      os: osx
-      osx_image: xcode10.1
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5-dev
-        - pyenv install $PYENV_VERSION
-
-    - name: CPython 3.5.2 on macOS 10.13 (High Sierra)
-      language: shell
-      os: osx
-      osx_image: xcode10.1
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.5.2
-        - pyenv install $PYENV_VERSION
-    
-    - stage: deployment
-      language: python
-      os: linux
-      dist: xenial
-      python: nightly
-install: 
-script: 
+        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+        # make sure it's on PATH as 'python3'
+        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+env:
+  global:
+    - TWINE_USERNAME=__token__
+    - CIBW_SKIP="cp27-* cp33-* cp34-* cp35-*"
+    - CIBW_BEFORE_TEST="pip install -r requirements.txt"
+    - CIBW_TEST_COMMAND="python3 {project}/FooFinder/test.py"
+    #- CIBW_TEST_COMMAND="python -m unittest discover -f -s {project}/tests"
+    # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
+install:
+  - python3 -m pip install -r requirements.txt
+  #- python3 -m pip install cibuildwheel==1.6.4
+script:
+  ## unittest
   - python FooFinder/test.py
-  - if [[ "$TRAVIS_BUILD_STAGE_NAME" == "deployment" ]]; then export RUN_DEPLOY="true"; fi
-deploy:
-  - provider: releases
-    token: $RELEASES_TOKEN
-    file_glob: true
-    file: dist/*
-    skip_cleanup: true
-    on:
-      tags: true
-      condition: $RUN_DEPLOY = "true"
-    edge: true # opt in to dpl v2
-  - provider: pypi
-    distributions: sdist bdist_wheel
-    username: "__token__"
-    password: $PYPI_TOKEN
-    on:
-      tags: true
-      condition: $RUN_DEPLOY = "true"
-    edge: true # opt in to dpl v2
+
+  ## cibuildwheel
+  #- python3 -m cibuildwheel --output-dir wheelhouse
+  
+  ## pure python
+  - pip install wheel
+  - pip wheel -w wheelhouse .
+after_success:
+  #if the release was tagged, upload them to PyPI
+  #python3 -m twine upload wheelhouse/*.whl
+  - |
+    if [[ $TRAVIS_TAG ]]; then
+      python3 -m pip install twine
+      python3 -m twine upload --repository testpypi wheelhouse/*.whl
+    fi
