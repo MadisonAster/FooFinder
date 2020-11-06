@@ -34,13 +34,13 @@ env:
   global:
     - TWINE_USERNAME=__token__
     - CIBW_SKIP="cp27-* cp33-* cp34-* cp35-*"
-    - CIBW_BEFORE_TEST="pip install -r requirements.txt"
+    - CIBW_BEFORE_TEST="pip3 install -r requirements.txt"
     - CIBW_TEST_COMMAND="python3 {project}/FooFinder/test.py"
     #- CIBW_TEST_COMMAND="python -m unittest discover -f -s {project}/tests"
     # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
 install:
-  #- python3 -m pip install -r requirements.txt
-  #- python3 -m pip install cibuildwheel==1.6.4
+  #- python3 -m pip3 install -r requirements.txt
+  #- python3 -m pip3 install cibuildwheel==1.6.4
 script:
   ## unittest
   - python FooFinder/test.py
@@ -50,12 +50,12 @@ script:
   
   ## pure python
   - pip3 install wheel
-  - pip wheel -w wheelhouse .
+  - pip3 wheel -w wheelhouse .
 after_success:
   #if the release was tagged, upload them to PyPI
   #python3 -m twine upload wheelhouse/*.whl
   - |
     if [[ $TRAVIS_TAG ]]; then
-      python3 -m pip install twine
+      python3 -m pip3 install twine
       python3 -m twine upload --repository testpypi wheelhouse/*.whl
     fi
