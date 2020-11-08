@@ -1,4 +1,8 @@
-import sys, os, builtins, inspect
+import sys, os
+try:
+    import builtins, inspect
+except:
+    print(sys.version)
 from importlib import machinery
 import zipimport
 
