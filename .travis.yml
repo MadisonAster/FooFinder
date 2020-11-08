@@ -15,13 +15,22 @@ python:
 env:
   - PARALLELIZE=true
   #- PARALLELIZE=false
-matrix:
-  include:
-    - services: docker
-      arch: 
-        - arm64
-        - ppc64le
-        - s390x
+
+## Ideal version, doesn't work
+#matrix:
+#  include:
+#    - services: docker
+#      arch: 
+#        - amd64
+#        - arm64
+#        - ppc64le
+#        - s390x
+#    - os: osx
+#      osx_image:
+#        - xcode12u
+#        - xcode11.3
+#        - xcode10.2
+#    - os: windows
 
 language: python
 jobs:
@@ -62,13 +71,6 @@ jobs:
         - export PATH="/c/Python39:/c/Python39/Scripts:$PATH"
         # make sure it's on PATH as 'python3'
         - ln -s /c/Python39/python.exe /c/Python39/python3.exe
-    #- os: windows
-    #  language: shell
-    #  before_install:
-    #    - choco install python --version 3.8.0
-    #    - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
-    #    # make sure it's on PATH as 'python3'
-    #    - ln -s /c/Python38/python.exe /c/Python38/python3.exe
 env:
   global:
     - TWINE_USERNAME=__token__
