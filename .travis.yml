@@ -3,6 +3,19 @@ jobs:
   include:
     ## linux build
     - services: docker
+    dist: xenial
+    python:
+    #  - "2.7"
+    #  - "3.4"
+      - "3.5"
+      - "3.6"
+      - "3.7"
+      - "3.7-dev"
+      - "3.8-dev"
+      - "nightly"
+      # Also test pypy
+      - "pypy"
+      - "pypy3"
     
     ## linux ARMv8 build
     - services: docker
