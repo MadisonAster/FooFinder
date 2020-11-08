@@ -1,7 +1,7 @@
 language: python
 python:
 #  - "2.7"
-  - "3.4"
+#  - "3.4"
   - "3.5"
   - "3.6"
   - "3.7"
@@ -12,31 +12,23 @@ python:
   # Also test pypy
   #- "pypy"      #pip3 not found
   #- "pypy3"     #no bueno
-#jobs:
-#  include:
-#    ## linux build
-#    - services: docker
 
 language: python
-#python: "3.9"
 jobs:
-    ## linux build
-    #- services: docker
-
     ## linux ARMv8 build
     - services: docker
       arch: arm64
-      python: "3.9"
+      python: "nightly"
     
     ## linux PPC64LE build
     - services: docker
       arch: ppc64le
-      python: "3.9"
+      python: "nightly"
     
     ## linux S390X build
     - services: docker
       arch: s390x
-      python: "3.9"
+      python: "nightly"
 
     ## osx build
     - os: osx
@@ -56,10 +48,17 @@ jobs:
     - os: windows
       language: shell
       before_install:
-        - choco install python --version 3.8.0
-        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+        - choco install python --version 3.9.0
+        - export PATH="/c/Python39:/c/Python39/Scripts:$PATH"
         # make sure it's on PATH as 'python3'
-        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+        - ln -s /c/Python39/python.exe /c/Python39/python3.exe
+    #- os: windows
+    #  language: shell
+    #  before_install:
+    #    - choco install python --version 3.8.0
+    #    - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+    #    # make sure it's on PATH as 'python3'
+    #    - ln -s /c/Python38/python.exe /c/Python38/python3.exe
 env:
   global:
     - TWINE_USERNAME=__token__
