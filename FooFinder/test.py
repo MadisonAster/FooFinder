@@ -1,9 +1,6 @@
 import unittest
 import os, sys
-try:
-    import builtins, copy
-except:
-    print(sys.version)
+import builtins, copy
 import zipimport
 
 class test_FooFinder(unittest.TestCase):
