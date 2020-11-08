@@ -5,18 +5,23 @@ python:
   - "3.5"
   - "3.6"
   - "3.7"
-  - "3.7-dev"
-  - "3.8-dev"
+  - "3.8"
+  - "3.9"
+  - "3.9-dev"
   - "nightly"
   # Also test pypy
-  - "pypy"
-  - "pypy3"
+  #- "pypy"      #pip3 not found
+  #- "pypy3"     #no bueno
 jobs:
   include:
     ## linux build
     - services: docker
-      dist: xenial
-    
+
+language: python
+jobs:
+    ## linux build
+    - services: docker
+
     ## linux ARMv8 build
     - services: docker
       arch: arm64
@@ -29,20 +34,22 @@ jobs:
     - services: docker
       arch: s390x
 
-language: python
-jobs:
     ## osx build
     - os: osx
       osx_image: xcode12u
-      language: shell
+      #language: shell
+      language: generic
+      env: PYTHON=39
     - os: osx
       osx_image: xcode11.3
-      language: shell
+      #language: shell
+      language: generic
+      env: PYTHON=38
     - os: osx
       osx_image: xcode10.2
       #language: shell
       language: generic
-      env: PYTHON=38
+      env: PYTHON=37
     
     ## windows build
     - os: windows
