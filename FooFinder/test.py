@@ -1,5 +1,6 @@
 import unittest
 import os, sys
+print('test.py', sys.version)
 import builtins, copy
 import zipimport
 
