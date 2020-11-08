@@ -17,41 +17,28 @@ env:
   #- PARALLELIZE=false
 matrix:
   include:
-    #language: python
-    #jobs:
     - services: docker
-
-      ## linux ARMv8 build
-    - services: docker
-      arch: arm64
-      #python: nightly
-    
-    ## linux PPC64LE build
-    - services: docker
-      arch: ppc64le
-      #python: nightly
-    
-    ## linux S390X build
-    - services: docker
-      arch: s390x
-      #python: nightly
+      arch: 
+        - arm64
+        - ppc64le
+        - s390x
 
 language: python
 jobs:
     ## linux ARMv8 build
-    #- services: docker
-    #  arch: arm64
-    #  python: nightly
+    - services: docker
+      arch: arm64
+      python: nightly
     
     ## linux PPC64LE build
-    #- services: docker
-    #  arch: ppc64le
-    #  python: nightly
+    - services: docker
+      arch: ppc64le
+      python: nightly
     
     ## linux S390X build
-    #- services: docker
-    #  arch: s390x
-    #  python: nightly
+    - services: docker
+      arch: s390x
+      python: nightly
 
     ## osx build
     - os: osx
