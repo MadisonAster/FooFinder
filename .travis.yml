@@ -25,9 +25,9 @@ jobs:
       language: shell
     - os: osx
       osx_image: xcode10.2
-      language: shell
-      #language: generic
-      #env: PYTHON=36
+      #language: shell
+      language: generic
+      env: PYTHON=36
     
     ## windows build
     - os: windows
