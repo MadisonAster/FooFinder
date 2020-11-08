@@ -12,6 +12,9 @@ python:
   # Also test pypy
   #- "pypy"      #pip3 not found
   #- "pypy3"     #no bueno
+env:
+  - PARALLELIZE=true
+  #- PARALLELIZE=false
 
 language: python
 jobs:
