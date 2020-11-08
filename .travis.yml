@@ -21,17 +21,17 @@ jobs:
     ## linux ARMv8 build
     - services: docker
       arch: arm64
-      python: "nightly"
+      python: nightly
     
     ## linux PPC64LE build
     - services: docker
       arch: ppc64le
-      python: "nightly"
+      python: nightly
     
     ## linux S390X build
     - services: docker
       arch: s390x
-      python: "nightly"
+      python: nightly
 
     ## osx build
     - os: osx
