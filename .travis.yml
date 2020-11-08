@@ -1,21 +1,21 @@
 language: python
+python:
+#  - "2.7"
+#  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.7-dev"
+  - "3.8-dev"
+  - "nightly"
+  # Also test pypy
+  - "pypy"
+  - "pypy3"
 jobs:
   include:
     ## linux build
     - services: docker
       dist: xenial
-      python:
-      #  - "2.7"
-      #  - "3.4"
-        - "3.5"
-        - "3.6"
-        - "3.7"
-        - "3.7-dev"
-        - "3.8-dev"
-        - "nightly"
-        # Also test pypy
-        - "pypy"
-        - "pypy3"
     
     ## linux ARMv8 build
     - services: docker
@@ -28,7 +28,9 @@ jobs:
     ## linux S390X build
     - services: docker
       arch: s390x
-    
+
+language: python
+jobs:
     ## osx build
     - os: osx
       osx_image: xcode12u
@@ -40,7 +42,7 @@ jobs:
       osx_image: xcode10.2
       #language: shell
       language: generic
-      env: PYTHON=36
+      env: PYTHON=38
     
     ## windows build
     - os: windows
