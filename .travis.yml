@@ -1,7 +1,7 @@
 language: python
 python:
 #  - "2.7"
-#  - "3.4"
+  - "3.4"
   - "3.5"
   - "3.6"
   - "3.7"
@@ -12,15 +12,16 @@ python:
   # Also test pypy
   #- "pypy"      #pip3 not found
   #- "pypy3"     #no bueno
-jobs:
-  include:
-    ## linux build
-    - services: docker
+#jobs:
+#  include:
+#    ## linux build
+#    - services: docker
 
 language: python
+#python: "3.9"
 jobs:
     ## linux build
-    - services: docker
+    #- services: docker
 
     ## linux ARMv8 build
     - services: docker
@@ -33,21 +34,19 @@ jobs:
     ## linux S390X build
     - services: docker
       arch: s390x
+      python: "3.9"
 
     ## osx build
     - os: osx
       osx_image: xcode12u
-      #language: shell
       language: generic
       env: PYTHON=39
     - os: osx
       osx_image: xcode11.3
-      #language: shell
       language: generic
       env: PYTHON=38
     - os: osx
       osx_image: xcode10.2
-      #language: shell
       language: generic
       env: PYTHON=37
     
