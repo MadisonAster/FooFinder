@@ -59,6 +59,7 @@ jobs:
     ## osx build
     - os: osx
       osx_image: xcode12u
+      Python: 3.9
       #language: shell
       #before_install:
       #  - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.9.0
