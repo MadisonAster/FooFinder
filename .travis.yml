@@ -13,8 +13,8 @@ python:
   - "nightly"
 dist: xenial
 os: linux
-env:
-  - PARALLELIZE=false
+#env:
+#  - PARALLELIZE=false
 #  global:
 #    #- PARALLELIZE=false #doesn't seem to do anything :-(
 #
