@@ -99,7 +99,7 @@ install:
   #- python3 -m pip3 install cibuildwheel==1.6.4
 
 script:
-  ## unittest
+  ## unittests
   - python3 FooFinder/test.py
 
   ## cibuildwheel
