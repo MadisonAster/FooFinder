@@ -131,7 +131,7 @@ deploy:
     distributions: sdist bdist_wheel
     username: "__token__"
     password: $TWINE_PASSWORD
-    file: wheelhouse/*.whl
+    #file: wheelhouse/*.whl
     on:
       tags: true
       condition: $TRAVIS_BUILD_STAGE_NAME = "deployment"
