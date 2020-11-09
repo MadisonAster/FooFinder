@@ -1,7 +1,9 @@
 language: python
 python:
-#  - "2.7"
-#  - "3.4"
+#  - pypy      #pip3 not found
+#  - pypy3     #no bueno
+#  - 2.7
+#  - 3.4
   - 3.5
   - 3.6
   - 3.7
@@ -9,9 +11,6 @@ python:
   - 3.9
   - 3.9-dev
   - nightly
-  # Also test pypy
-  #- "pypy"      #pip3 not found
-  #- "pypy3"     #no bueno
 env:
   global:
     - PARALLELIZE=true #doesn't seem to do anything :-(
