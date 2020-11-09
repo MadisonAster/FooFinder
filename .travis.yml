@@ -14,15 +14,16 @@ python:
 dist: xenial
 os: linux
 env:
-  global:
-    #- PARALLELIZE=false #doesn't seem to do anything :-(
-
-    - TWINE_USERNAME=__token__
-    - CIBW_SKIP="cp27-* cp33-* cp34-* cp35-*"
-    - CIBW_BEFORE_TEST="pip3 install -r requirements.txt"
-    - CIBW_TEST_COMMAND="python3 {project}/FooFinder/test.py"
-    #- CIBW_TEST_COMMAND="python -m unittest discover -f -s {project}/tests"
-    # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
+  - PARALLELIZE=false
+#  global:
+#    #- PARALLELIZE=false #doesn't seem to do anything :-(
+#
+#    - TWINE_USERNAME=__token__
+#    - CIBW_SKIP="cp27-* cp33-* cp34-* cp35-*"
+#    - CIBW_BEFORE_TEST="pip3 install -r requirements.txt"
+#    - CIBW_TEST_COMMAND="python3 {project}/FooFinder/test.py"
+#    #- CIBW_TEST_COMMAND="python -m unittest discover -f -s {project}/tests"
+#    # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
 
 ## Ideal version, doesn't work
 #matrix:
@@ -144,4 +145,3 @@ deploy:
   #    python3 -m twine upload --repository testpypi wheelhouse/*.whl
   #  fi
 
-  
