@@ -59,16 +59,19 @@ jobs:
     ## osx build
     - os: osx
       osx_image: xcode12u
-      language: generic
-      env: PYTHON_VERSION=3.9
+      #language: generic
+      #env: PYTHON_VERSION=3.9
+      python: nightly
     - os: osx
       osx_image: xcode11.3
-      language: generic
-      env: PYTHON_VERSION=3.8
+      #language: generic
+      #env: PYTHON_VERSION=3.8
+      python: nightly
     - os: osx
       osx_image: xcode10.2
-      language: generic
-      env: PYTHON_VERSION=3.7
+      #language: generic
+      #env: PYTHON_VERSION=3.7
+      python: nightly
     
     ## windows build
     - os: windows
