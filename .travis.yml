@@ -112,16 +112,11 @@ script:
   ## pure python
   - pip3 install wheel
   - pip3 wheel -w wheelhouse .
+
+  ## mark deployment stage
   - if [[ "$TRAVIS_BUILD_STAGE_NAME" == "deployment" ]]; then export RUN_DEPLOY="true"; fi
   
-after_success:
-  #- if [[ "$TRAVIS_BUILD_STAGE_NAME" == "deployment" ]]; then export RUN_DEPLOY="true"; fi
-  #- |
-  #  if [[ $TRAVIS_TAG ]]; then
-  #    python3 -m pip3 install twine
-  #    python3 -m twine upload --repository testpypi wheelhouse/*.whl
-  #  fi
-
+deploy:
   - provider: releases
     token: $RELEASES_TOKEN
     file_glob: true
