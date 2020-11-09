@@ -60,7 +60,6 @@ jobs:
     - os: osx
       osx_image: xcode12u
       language: generic
-      Python: 3.9
       #language: shell
       #before_install:
       #  - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.9.0
@@ -68,7 +67,6 @@ jobs:
     - os: osx
       osx_image: xcode11.3
       language: generic
-      Python: 3.8
       #language: shell
       #before_install:
       #  - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
@@ -76,7 +74,6 @@ jobs:
     - os: osx
       osx_image: xcode10.2
       language: generic
-      Python: 3.7
       #language: shell
       #before_install:
       #  - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
