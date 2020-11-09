@@ -62,7 +62,9 @@ jobs:
       #language: generic
       #env: PYTHON=3.9
       language: shell
-      python: 3.9
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.9.0
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
     - os: osx
       osx_image: xcode11.3
       #language: generic
@@ -82,7 +84,13 @@ jobs:
       before_install:
         - choco install python --version 3.9.0
         - export PATH="/c/Python39:/c/Python39/Scripts:$PATH"
-        # make sure it's on PATH as 'python3'
+        - ln -s /c/Python39/python.exe /c/Python39/python3.exe
+
+    - os: windows
+      language: shell
+      before_install:
+        - choco install python --version 3.9.0 --x86
+        - export PATH="/c/Python39:/c/Python39/Scripts:$PATH"
         - ln -s /c/Python39/python.exe /c/Python39/python3.exe
 
 install:
