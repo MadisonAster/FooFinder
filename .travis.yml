@@ -60,15 +60,15 @@ jobs:
     - os: osx
       osx_image: xcode12u
       language: generic
-      env: PYTHON=39
+      env: PYTHON_VERSION=3.9
     - os: osx
       osx_image: xcode11.3
       language: generic
-      env: PYTHON=38
+      env: PYTHON_VERSION=3.8
     - os: osx
       osx_image: xcode10.2
       language: generic
-      env: PYTHON=37
+      env: PYTHON_VERSION=3.7
     
     ## windows build
     - os: windows
@@ -82,6 +82,7 @@ jobs:
 install:
   #- python3 -m pip3 install -r requirements.txt
   #- python3 -m pip3 install cibuildwheel==1.6.4
+
 script:
   ## unittest
   - python3 FooFinder/test.py
