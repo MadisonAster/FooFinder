@@ -59,25 +59,23 @@ jobs:
     ## osx build
     - os: osx
       osx_image: xcode12u
-      #language: generic
-      #env: PYTHON=3.9
-      language: shell
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.9.0
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+      #language: shell
+      #before_install:
+      #  - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.9.0
+      #  - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
     - os: osx
       osx_image: xcode11.3
-      #language: generic
-      #env: PYTHON=3.8
-      language: shell
-      python: 3.8
+      #language: shell
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
     - os: osx
       osx_image: xcode10.2
-      #language: generic
-      #env: PYTHON=3.7
-      language: shell
-      python: 3.7
-    
+      #language: shell
+      before_install:
+        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
+        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+      
     ## windows build
     - os: windows
       language: shell
