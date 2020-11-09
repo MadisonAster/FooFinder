@@ -94,6 +94,10 @@ jobs:
         - export PATH="/c/Python39:/c/Python39/Scripts:$PATH"
         - ln -s /c/Python39/python.exe /c/Python39/python3.exe
 
+    - stage: deployment
+      services: docker
+      python: nightly
+      
 install:
   #- python3 -m pip3 install -r requirements.txt
   #- python3 -m pip3 install cibuildwheel==1.6.4
@@ -108,8 +112,15 @@ script:
   ## pure python
   - pip3 install wheel
   - pip3 wheel -w wheelhouse .
-
+  - if [[ "$TRAVIS_BUILD_STAGE_NAME" == "deployment" ]]; then export RUN_DEPLOY="true"; fi
+  
 after_success:
+  #- if [[ "$TRAVIS_BUILD_STAGE_NAME" == "deployment" ]]; then export RUN_DEPLOY="true"; fi
+  #- |
+  #  if [[ $TRAVIS_TAG ]]; then
+  #    python3 -m pip3 install twine
+  #    python3 -m twine upload --repository testpypi wheelhouse/*.whl
+  #  fi
 
   - provider: releases
     token: $RELEASES_TOKEN
@@ -118,16 +129,17 @@ after_success:
     skip_cleanup: true
     on:
       tags: true
-      condition: $TRAVIS_TAG
+      condition: $RUN_DEPLOY = "true"
     edge: true # opt in to dpl v2
 
   - provider: pypi
     distributions: sdist bdist_wheel
     username: "__token__"
-    password: $TWINE_PASSWORD
+    password: $PYPI_TOKEN
+    file: wheelhouse/*.whl
     on:
       tags: true
-      condition: $TRAVIS_TAG
+      condition: $RUN_DEPLOY = "true"
     edge: true # opt in to dpl v2
 
   #if the release was tagged, upload them to PyPI
