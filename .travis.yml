@@ -1,16 +1,16 @@
 language: python
 python:
-#  - pypy      #pip3 not found
-#  - pypy3     #no bueno
-#  - 2.7
-#  - 3.4
-  - 3.5
-  - 3.6
-  - 3.7
-  - 3.8
-  - 3.9
-  - 3.9-dev
-  - nightly
+#  - "pypy"      #pip3 not found
+#  - "pypy3"     #no bueno
+#  - "2.7"
+#  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
+  - "3.9-dev"
+  - "nightly"
 env:
   global:
     - PARALLELIZE=false #doesn't seem to do anything :-(
@@ -120,7 +120,7 @@ deploy:
     token: $RELEASES_TOKEN
     file_glob: true
     file: dist/*
-    skip_cleanup: true
+    #skip_cleanup: true
     on:
       tags: true
       condition: $TRAVIS_BUILD_STAGE_NAME = "deployment"
