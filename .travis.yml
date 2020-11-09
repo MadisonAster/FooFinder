@@ -38,6 +38,9 @@ env:
 #        - xcode11.3
 #        - xcode10.2
 #    - os: windows
+#      arch:
+#        - amd64
+#        - x86
 
 language: python
 jobs:
@@ -112,9 +115,6 @@ script:
   ## pure python
   - pip3 install wheel
   - pip3 wheel -w wheelhouse .
-
-  ## mark deployment stage
-  #- if [[ "$TRAVIS_BUILD_STAGE_NAME" == "deployment" ]]; then export RUN_DEPLOY="true"; fi
   
 deploy:
   - provider: releases
@@ -130,7 +130,7 @@ deploy:
   - provider: pypi
     distributions: sdist bdist_wheel
     username: "__token__"
-    password: $PYPI_TOKEN
+    password: $TWINE_PASSWORD
     file: wheelhouse/*.whl
     on:
       tags: true
