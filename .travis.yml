@@ -11,6 +11,8 @@ python:
   - "3.9"
   - "3.9-dev"
   - "nightly"
+dist: xenial
+os: linux
 env:
   global:
     - PARALLELIZE=false #doesn't seem to do anything :-(
@@ -41,7 +43,6 @@ env:
 #        - amd64
 #        - x86
 
-#language: python
 jobs:
     ## linux ARMv8 build
     - services: docker
