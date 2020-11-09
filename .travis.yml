@@ -129,7 +129,7 @@ deploy:
   - provider: pypi
     distributions: sdist bdist_wheel
     username: "__token__"
-    password: $PYPI_TOKEN
+    password: $TWINE_PASSWORD
     on:
       tags: true
       condition: $TRAVIS_BUILD_STAGE_NAME = "deployment"
