@@ -114,7 +114,7 @@ script:
   - pip3 wheel -w wheelhouse .
 
   ## mark deployment stage
-  - if [[ "$TRAVIS_BUILD_STAGE_NAME" == "deployment" ]]; then export RUN_DEPLOY="true"; fi
+  #- if [[ "$TRAVIS_BUILD_STAGE_NAME" == "deployment" ]]; then export RUN_DEPLOY="true"; fi
   
 deploy:
   - provider: releases
@@ -124,7 +124,7 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-      condition: $RUN_DEPLOY = "true"
+      condition: $TRAVIS_BUILD_STAGE_NAME = "deployment"
     edge: true # opt in to dpl v2
 
   - provider: pypi
@@ -134,7 +134,7 @@ deploy:
     file: wheelhouse/*.whl
     on:
       tags: true
-      condition: $RUN_DEPLOY = "true"
+      condition: $TRAVIS_BUILD_STAGE_NAME = "deployment"
     edge: true # opt in to dpl v2
 
   #if the release was tagged, upload them to PyPI
