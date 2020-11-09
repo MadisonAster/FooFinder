@@ -41,7 +41,7 @@ env:
 #        - amd64
 #        - x86
 
-language: python
+#language: python
 jobs:
     ## linux ARMv8 build
     - services: docker
