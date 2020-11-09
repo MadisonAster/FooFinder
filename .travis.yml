@@ -13,7 +13,7 @@ python:
   - nightly
 env:
   global:
-    #- PARALLELIZE=true #doesn't seem to do anything :-(
+    - PARALLELIZE=false #doesn't seem to do anything :-(
 
     - TWINE_USERNAME=__token__
     - CIBW_SKIP="cp27-* cp33-* cp34-* cp35-*"
