@@ -67,16 +67,20 @@ jobs:
       #  - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
     - os: osx
       osx_image: xcode11.3
+      language: generic
+      Python: 3.8
       #language: shell
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+      #before_install:
+      #  - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.8.0
+      #  - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
     - os: osx
       osx_image: xcode10.2
+      language: generic
+      Python: 3.7
       #language: shell
-      before_install:
-        - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
-        - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
+      #before_install:
+      #  - export PATH=/Users/travis/.pyenv/shims:$PATH PYENV_VERSION=3.7.0
+      #  - travis_wait brew upgrade pyenv && pyenv install $PYENV_VERSION
       
     ## windows build
     - os: windows
