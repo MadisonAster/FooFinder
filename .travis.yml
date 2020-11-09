@@ -112,14 +112,14 @@ script:
   #- python3 -m cibuildwheel --output-dir wheelhouse
   
   ## pure python
-  - pip3 install wheel
-  - pip3 wheel -w wheelhouse .
+  #- pip3 install wheel
+  #- pip3 wheel -w wheelhouse .
   
 deploy:
   - provider: releases
     token: $RELEASES_TOKEN
     file_glob: true
-    file: wheelhouse/*.whl
+    file: dist/*
     skip_cleanup: true
     on:
       tags: true
@@ -130,7 +130,6 @@ deploy:
     distributions: sdist bdist_wheel
     username: "__token__"
     password: $TWINE_PASSWORD
-    #file: wheelhouse/*.whl
     on:
       tags: true
       condition: $TRAVIS_BUILD_STAGE_NAME = "deployment"
