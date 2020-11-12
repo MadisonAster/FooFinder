@@ -13,36 +13,6 @@ python:
   - "nightly"
 dist: xenial
 os: linux
-#env:
-#  - PARALLELIZE=false
-#  global:
-#    #- PARALLELIZE=false #doesn't seem to do anything :-(
-#
-#    - TWINE_USERNAME=__token__
-#    - CIBW_SKIP="cp27-* cp33-* cp34-* cp35-*"
-#    - CIBW_BEFORE_TEST="pip3 install -r requirements.txt"
-#    - CIBW_TEST_COMMAND="python3 {project}/FooFinder/test.py"
-#    #- CIBW_TEST_COMMAND="python -m unittest discover -f -s {project}/tests"
-#    # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
-
-## Ideal version, doesn't work
-#matrix:
-#  include:
-#    - services: docker
-#      arch: 
-#        - amd64
-#        - arm64
-#        - ppc64le
-#        - s390x
-#    - os: osx
-#      osx_image:
-#        - xcode12u
-#        - xcode11.3
-#        - xcode10.2
-#    - os: windows
-#      arch:
-#        - amd64
-#        - x86
 
 jobs:
     ## linux ARMv8 build
@@ -101,17 +71,10 @@ jobs:
     - stage: deployment
       services: docker
       python: nightly
-      
-install:
-  #- python3 -m pip3 install -r requirements.txt
-  #- python3 -m pip3 install cibuildwheel==1.6.4
 
 script:
   ## unittests
   - python3 FooFinder/test.py
-
-  ## cibuildwheel
-  #- python3 -m cibuildwheel --output-dir wheelhouse
   
   ## pure python
   #- pip3 install wheel
@@ -136,12 +99,3 @@ deploy:
       tags: true
       condition: $TRAVIS_BUILD_STAGE_NAME = "deployment"
     edge: true # opt in to dpl v2
-
-  #if the release was tagged, upload them to PyPI
-  #python3 -m twine upload wheelhouse/*.whl
-  #- |
-  #  if [[ $TRAVIS_TAG ]]; then
-  #    python3 -m pip3 install twine
-  #    python3 -m twine upload --repository testpypi wheelhouse/*.whl
-  #  fi
-
