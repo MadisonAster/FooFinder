@@ -34,4 +34,4 @@ steps:
 
 - script: |
     python FooFinder/test.py
-  displayName: 'pytest'
+  displayName: 'FooFinder/test.py'
