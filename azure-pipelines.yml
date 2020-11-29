@@ -1,7 +1,6 @@
 trigger:
-#- main
 - master
-- azure2
+- azuretest
 
 pool:
   vmImage: 'ubuntu-latest'
