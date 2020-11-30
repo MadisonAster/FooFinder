@@ -1,6 +1,8 @@
 trigger:
-- master
-- azuretest
+  branches:
+    include: ['*']
+  tags:
+    include: ['*']
 
 pool:
   vmImage: 'ubuntu-latest'
