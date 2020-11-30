@@ -1,15 +1,15 @@
-#trigger:
-#  branches:
-#    include: ['*']
-#  tags:
-#    include: ['*']
+trigger:
+  branches:
+    include: ['*']
+  tags:
+    include: ['*']
 stages:
 - stage: Test
-  trigger:
-    branches:
-      include: ['*']
-    tags:
-      include: ['*']
+  #trigger:
+  #  branches:
+  #    include: ['*']
+  #  tags:
+  #    include: ['*']
   jobs:
   - job:
     pool:
@@ -42,12 +42,13 @@ stages:
       displayName: 'Integration Tests'
 
 - stage: Deploy
-  trigger:
-    #branches:
-    #  include: ['*']
-    tags:
-      include: ['*']
-  condition: succeeded()
+  #trigger:
+  #  branches:
+  #    include: ['*']
+  #  tags:
+  #    include: ['*']
+  #condition: succeeded()
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
   dependsOn: Test
   jobs:
   - job:
@@ -62,6 +63,7 @@ stages:
       displayName: 'Build'
       #condition: succeeded()
       #condition: and(succeeded(), eq(variables['python.version'], '3.9'))
+      #condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
 
     - task: GithubRelease@0 
       displayName: 'Create GitHub Release'      
