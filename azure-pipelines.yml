@@ -55,7 +55,8 @@ stages:
     - task: GithubRelease@0 
       displayName: 'Create GitHub Release'      
       inputs:
-        gitHubConnection: MadisonAster
+        #gitHubConnection: MadisonAster.FooFinder
+        gitHubConnection: FooFinder Release connection
         repositoryName: MadisonAster/FooFinder           
         assets: dist/*
 
