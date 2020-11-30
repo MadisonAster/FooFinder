@@ -1,10 +1,15 @@
-trigger:
-  branches:
-    include: ['*']
-  tags:
-    include: ['*']
+#trigger:
+#  branches:
+#    include: ['*']
+#  tags:
+#    include: ['*']
 stages:
 - stage: Test
+  trigger:
+    branches:
+      include: ['*']
+    tags:
+      include: ['*']
   jobs:
   - job:
     pool:
@@ -37,6 +42,12 @@ stages:
       displayName: 'Integration Tests'
 
 - stage: Deploy
+  trigger:
+    #branches:
+    #  include: ['*']
+    tags:
+      include: ['*']
+  condition: succeeded()
   dependsOn: Test
   jobs:
   - job:
@@ -49,7 +60,7 @@ stages:
         python setup.py sdist
         python setup.py bdist_wheel --universal
       displayName: 'Build'
-      condition: succeeded()
+      #condition: succeeded()
       #condition: and(succeeded(), eq(variables['python.version'], '3.9'))
 
     - task: GithubRelease@0 
