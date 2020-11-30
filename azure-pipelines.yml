@@ -30,22 +30,18 @@ steps:
 
 - script: |
     python FooFinder/test.py
-  displayName: 'FooFinder/test.py'
+  displayName: 'Integration Tests'
 
 - script: |
     python -m pip install --upgrade pip
     python -m pip install --upgrade setuptools wheel    
-  displayName: 'Install dependencies'
-
-- script: |
-        python setup.py sdist
-  displayName: 'Make sdist'
-
-- script: |
-        python setup.py bdist_wheel --universal
-  displayName: 'Make wheel'
+    python setup.py sdist
+    python setup.py bdist_wheel --universal
+  displayName: 'Build'
+  condition: and(succeeded(), eq(variables['python.version'], '3.9'))
 
 - task: PublishPipelineArtifact@0
   inputs:
     artifactName: 'artifact'
-    targetPath: 'dist'
+    targetPath: 'Artifact Deployment'
+  condition: and(succeeded(), eq(variables['python.version'], '3.9'))
