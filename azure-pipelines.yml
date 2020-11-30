@@ -22,38 +22,41 @@ stages:
       Python39:
         python.version: '3.9'
 
-  steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '$(python.version)'
-    displayName: 'Use Python $(python.version)'
+  jobs:
+  - job:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(python.version)'
+      displayName: 'Use Python $(python.version)'
 
-  #- script: |
-  #  displayName: 'Install dependencies'
+    #- script: |
+    #  displayName: 'Install dependencies'
 
-  - script: |
-      python FooFinder/test.py
-    displayName: 'Integration Tests'
+    - script: |
+        python FooFinder/test.py
+      displayName: 'Integration Tests'
 
 - stage: Deploy
+  dependsOn: Test
   pool:
     vmImage: 'ubuntu-latest'
-  steps:
-  - script: |
-      python -m pip install --upgrade pip
-      python -m pip install --upgrade setuptools wheel    
-      python setup.py sdist
-      python setup.py bdist_wheel --universal
-    displayName: 'Build'
-    condition: succeeded()
-    #condition: and(succeeded(), eq(variables['python.version'], '3.9'))
+  jobs:
+  - job:
+    - script: |
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade setuptools wheel    
+        python setup.py sdist
+        python setup.py bdist_wheel --universal
+      displayName: 'Build'
+      condition: succeeded()
+      #condition: and(succeeded(), eq(variables['python.version'], '3.9'))
 
-  - task: GithubRelease@0 
-    displayName: 'Create GitHub Release'      
-    inputs:
-      gitHubConnection: MadisonAster
-      repositoryName: MadisonAster/FooFinder           
-      assets: dist/*
+    - task: GithubRelease@0 
+      displayName: 'Create GitHub Release'      
+      inputs:
+        gitHubConnection: MadisonAster
+        repositoryName: MadisonAster/FooFinder           
+        assets: dist/*
 
 #  - task: PublishPipelineArtifact@0
 #    inputs:
