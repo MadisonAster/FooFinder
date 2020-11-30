@@ -5,25 +5,25 @@ trigger:
     include: ['*']
 stages:
 - stage: Test
-  pool:
-    vmImage: 'ubuntu-latest'
-  strategy:
-    matrix:
-      #Python27:
-      #  python.version: '2.7'
-      Python35:
-        python.version: '3.5'
-      Python36:
-        python.version: '3.6'
-      Python37:
-        python.version: '3.7'
-      Python38:
-        python.version: '3.8'
-      Python39:
-        python.version: '3.9'
-
   jobs:
   - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    strategy:
+      matrix:
+        #Python27:
+        #  python.version: '2.7'
+        Python35:
+          python.version: '3.5'
+        Python36:
+          python.version: '3.6'
+        Python37:
+          python.version: '3.7'
+        Python38:
+          python.version: '3.8'
+        Python39:
+          python.version: '3.9'
+    steps:
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '$(python.version)'
@@ -38,10 +38,11 @@ stages:
 
 - stage: Deploy
   dependsOn: Test
-  pool:
-    vmImage: 'ubuntu-latest'
   jobs:
   - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
     - script: |
         python -m pip install --upgrade pip
         python -m pip install --upgrade setuptools wheel    
