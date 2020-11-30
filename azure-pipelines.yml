@@ -5,11 +5,6 @@ trigger:
     include: ['*']
 stages:
 - stage: Test
-  #trigger:
-  #  branches:
-  #    include: ['*']
-  #  tags:
-  #    include: ['*']
   jobs:
   - job:
     pool:
@@ -29,6 +24,7 @@ stages:
         Python39:
           python.version: '3.9'
     steps:
+
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '$(python.version)'
@@ -42,12 +38,6 @@ stages:
       displayName: 'Integration Tests'
 
 - stage: Deploy
-  #trigger:
-  #  branches:
-  #    include: ['*']
-  #  tags:
-  #    include: ['*']
-  #condition: succeeded()
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
   dependsOn: Test
   jobs:
@@ -55,20 +45,17 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+
     - script: |
         python -m pip install --upgrade pip
         python -m pip install --upgrade setuptools wheel    
         python setup.py sdist
         python setup.py bdist_wheel --universal
       displayName: 'Build'
-      #condition: succeeded()
-      #condition: and(succeeded(), eq(variables['python.version'], '3.9'))
-      #condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
 
     - task: GithubRelease@0 
       displayName: 'Create GitHub Release'      
       inputs:
-        #gitHubConnection: MadisonAster.FooFinder
         gitHubConnection: FooFinder Release connection
         repositoryName: MadisonAster/FooFinder           
         assets: dist/*
@@ -78,5 +65,4 @@ stages:
 #      artifactName: 'artifact'
 #      targetPath: 'dist'
 #    displayName: 'Artifact Deployment'
-#    condition: and(succeeded(), eq(variables['python.version'], '3.9'))
 
