@@ -48,7 +48,7 @@ stages:
 
     - script: |
         python -m pip install --upgrade pip
-        python -m pip install --upgrade setuptools wheel    
+        python -m pip install --upgrade setuptools wheel twine
         python setup.py sdist
         python setup.py bdist_wheel --universal
       displayName: 'Build'
