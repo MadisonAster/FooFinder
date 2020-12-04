@@ -69,5 +69,6 @@ stages:
     # Use command line script to 'twine upload', use -r to pass the repository name and --config-file to pass the environment variable set by the authenticate task.
     #python -m twine upload -r "PyPiService" --config-file $(PYPIRC_PATH) dist/*.whl
     - script: |
-        python -m twine upload -r "PyPiService" --config-file $(PYPIRC_PATH) dist/*
-        #python -m twine upload --repository-url https://upload.pypi.org/legacy/ --config-file $(PYPIRC_PATH) dist/*.whl
+        python -m twine upload -r FooFinder --config-file $(PYPIRC_PATH) dist/*.whl
+        #python -m twine upload -r FooFinder --repository-url https://upload.pypi.org/legacy/ --config-file $(PYPIRC_PATH) dist/*.whl
+        #python -m twine upload -r FooFinder --config-file $(PYPIRC_PATH) dist/*
