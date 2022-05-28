@@ -41,7 +41,6 @@ steps:
 - task: TwineAuthenticate@1
   displayName: Twine Authenticate
   inputs:
-    # In this case, name of the feed is 'myTestFeed' in the project 'myTestProject'. Project is needed because the feed is project scoped.
     artifactFeed: FooFinder/FooFinder_Feed
 
 - script: 'pip install twine'
