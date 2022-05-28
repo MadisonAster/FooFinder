@@ -33,39 +33,55 @@ stages:
         python FooFinder/test.py
       displayName: 'Integration Tests'
 
-- stage: Deploy
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
-  dependsOn: Test
-  jobs:
-  - job:
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
+- stage: Build Artifacts
+  - script: |
+    pip install wheel
+    pip install twine
 
-    - script: |
-        python -m pip install --upgrade pip
-        python -m pip install --upgrade setuptools wheel twine
-        python setup.py sdist
-        python setup.py bdist_wheel --universal
-      displayName: 'Build'
+  - script: |
+    python setup.py sdist
+    python setup.py bdist_wheel --universal
+  
+  - task: TwineAuthenticate@1
+    displayName: Twine Authenticate
+    inputs:
+      artifactFeed: FooFinder/FooFinder_Feed
+  - script: |
+    python -m twine upload -r FooFinder_Feed --config-file $(PYPIRC_PATH) dist/*.whl
 
-    - task: GithubRelease@0 
-      displayName: 'Create GitHub Release'      
-      inputs:
-        gitHubConnection: FooFinder Release connection
-        repositoryName: MadisonAster/FooFinder           
-        assets: dist/*
+# - stage: Deploy
+#   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+#   dependsOn: Test
+#   jobs:
+#   - job:
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     steps:
 
-    - task: TwineAuthenticate@1
-      displayName: 'Twine Authenticate'
-      inputs:
-        # In this case, name of the service connection is "pypitest".
-        pythonUploadServiceConnection: AzureTwineConnection
+#     - script: |
+#         python -m pip install --upgrade pip
+#         python -m pip install --upgrade setuptools wheel twine
+#         python setup.py sdist
+#         python setup.py bdist_wheel --universal
+#       displayName: 'Build'
 
-    # Use command line script to 'twine upload', use -r to pass the repository name and --config-file to pass the environment variable set by the authenticate task.
-    #python -m twine upload -r "AzureTwineConnection" --config-file $(PYPIRC_PATH) dist/*.whl
-    #python -m twine upload -r FooFinder --repository-url https://upload.pypi.org/legacy/ --config-file $(PYPIRC_PATH) dist/*.whl
-    #python -m twine upload -r FooFinder --config-file $(PYPIRC_PATH) dist/*
-    - script: |
-        python -m twine upload -r pypi --config-file $(PYPIRC_PATH) dist/*
+#     - task: GithubRelease@0 
+#       displayName: 'Create GitHub Release'      
+#       inputs:
+#         gitHubConnection: FooFinder Release connection
+#         repositoryName: MadisonAster/FooFinder           
+#         assets: dist/*
+
+#     - task: TwineAuthenticate@1
+#       displayName: 'Twine Authenticate'
+#       inputs:
+#         # In this case, name of the service connection is "pypitest".
+#         pythonUploadServiceConnection: AzureTwineConnection
+
+#     # Use command line script to 'twine upload', use -r to pass the repository name and --config-file to pass the environment variable set by the authenticate task.
+#     #python -m twine upload -r "AzureTwineConnection" --config-file $(PYPIRC_PATH) dist/*.whl
+#     #python -m twine upload -r FooFinder --repository-url https://upload.pypi.org/legacy/ --config-file $(PYPIRC_PATH) dist/*.whl
+#     #python -m twine upload -r FooFinder --config-file $(PYPIRC_PATH) dist/*
+#     - script: |
+#         python -m twine upload -r pypi --config-file $(PYPIRC_PATH) dist/*
         
