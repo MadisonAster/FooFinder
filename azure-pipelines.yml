@@ -32,21 +32,21 @@ stages:
     - script: |
         python FooFinder/test.py
       displayName: 'Integration Tests'
-- stage: Build Artifacts
-  - script: |
-      pip install wheel
-      pip install twine
 
-  - script: |
-      python setup.py sdist
-      python setup.py bdist_wheel --universal
+- script: |
+    pip install wheel
+    pip install twine
+
+- script: |
+    python setup.py sdist
+    python setup.py bdist_wheel --universal
   
-  - task: TwineAuthenticate@1
-    displayName: Twine Authenticate
-    inputs:
-      artifactFeed: FooFinder/FooFinder_Feed
-  - script: |
-      python -m twine upload -r FooFinder_Feed --config-file $(PYPIRC_PATH) dist/*.whl
+- task: TwineAuthenticate@1
+  displayName: Twine Authenticate
+  inputs:
+    artifactFeed: FooFinder/FooFinder_Feed
+- script: |
+    python -m twine upload -r FooFinder_Feed --config-file $(PYPIRC_PATH) dist/*.whl
 
 # - stage: Deploy
 #   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
