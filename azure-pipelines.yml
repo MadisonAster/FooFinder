@@ -31,12 +31,18 @@ steps:
     python setup.py bdist_wheel --universal
   displayName: 'python setup.py sdist'
 
-- task: CopyFiles@2
-  displayName: 'Copy Python Wheel to: $(Build.ArtifactStagingDirectory)'
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)'
-    Contents: 'dist/*.whl'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+# - task: CopyFiles@2
+#   displayName: 'Copy Python Wheel to: $(Build.ArtifactStagingDirectory)'
+#   inputs:
+#     SourceFolder: '$(Build.SourcesDirectory)'
+#     Contents: 'dist/*.whl'
+#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: TwineAuthenticate@1
+  displayName: Twine Authenticate
+  inputs:
+    # In this case, name of the feed is 'myTestFeed' in the project 'myTestProject'. Project is needed because the feed is project scoped.
+    artifactFeed: FooFinder/FooFinder_Feed
 
 - script: 'pip install twine'
   displayName: 'pip install twine'
