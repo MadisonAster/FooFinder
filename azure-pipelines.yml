@@ -1,52 +1,102 @@
 trigger:
-  branches:
-    include: ['*']
-  tags:
-    include: ['*']
-stages:
-- stage: Test
-  jobs:
-  - job:
-    pool:
-      vmImage: 'ubuntu-latest'
-    strategy:
-      matrix:
-        Python36:
-          python.version: '3.6'
-        Python37:
-          python.version: '3.7'
-        Python38:
-          python.version: '3.8'
-        Python39:
-          python.version: '3.9'
-    steps:
+- master
 
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '$(python.version)'
-      displayName: 'Use Python $(python.version)'
+pool:
+  vmImage: ubuntu-latest
+strategy:
+  matrix:
+    Python36:
+      python.version: '3.6'
+    Python37:
+      python.version: '3.7'
+    Python38:
+      python.version: '3.8'
+    Python39:
+      python.version: '3.9'
 
-    #- script: |
-    #  displayName: 'Install dependencies'
-
-    - script: |
-        python FooFinder/test.py
-      displayName: 'Integration Tests'
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(python.version)'
+  displayName: 'Use Python $(python.version)'
 
 - script: |
+    python -m pip install --upgrade pip
     pip install wheel
     pip install twine
+  displayName: 'Install dependencies'
 
 - script: |
     python setup.py sdist
     python setup.py bdist_wheel --universal
-  
-- task: TwineAuthenticate@1
-  displayName: Twine Authenticate
+  displayName: 'python setup.py sdist'
+
+- task: CopyFiles@2
+  displayName: 'Copy Python Wheel to: $(Build.ArtifactStagingDirectory)'
   inputs:
-    artifactFeed: FooFinder/FooFinder_Feed
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: 'dist/*.whl'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- script: 'pip install twine'
+  displayName: 'pip install twine'
+
 - script: |
     python -m twine upload -r FooFinder_Feed --config-file $(PYPIRC_PATH) dist/*.whl
+  displayName: 'twine upload --username $(username) --password ??? $(Build.ArtifactStagingDirectory)/dist/*.whl'
+  condition: succeededOrFailed()
+  timeoutInMinutes: 20
+
+# twine upload --username $(username) --password $(password) $(Build.ArtifactStagingDirectory)/dist/*.whl
+# trigger:
+#   branches:
+#     include: ['*']
+#   tags:
+#     include: ['*']
+# stages:
+# - stage: Test
+#   jobs:
+#   - job:
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     strategy:
+#       matrix:
+#         Python36:
+#           python.version: '3.6'
+#         Python37:
+#           python.version: '3.7'
+#         Python38:
+#           python.version: '3.8'
+#         Python39:
+#           python.version: '3.9'
+#     steps:
+
+#     - task: UsePythonVersion@0
+#       inputs:
+#         versionSpec: '$(python.version)'
+#       displayName: 'Use Python $(python.version)'
+
+#     #- script: |
+#     #  displayName: 'Install dependencies'
+
+#     - script: |
+#         python FooFinder/test.py
+#       displayName: 'Integration Tests'
+
+# - script: |
+#     pip install wheel
+#     pip install twine
+
+# - script: |
+#     python setup.py sdist
+#     python setup.py bdist_wheel --universal
+  
+# - task: TwineAuthenticate@1
+#   displayName: Twine Authenticate
+#   inputs:
+#     artifactFeed: FooFinder/FooFinder_Feed
+# - script: |
+#     python -m twine upload -r FooFinder_Feed --config-file $(PYPIRC_PATH) dist/*.whl
 
 # - stage: Deploy
 #   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
