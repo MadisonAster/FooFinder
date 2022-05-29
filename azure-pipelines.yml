@@ -51,16 +51,16 @@ stages:
 
     - task: CopyFiles@2
       inputs:
-        targetFolder: $(Build.ArtifactStagingDirectory)/dist/dist
+        targetFolder: $(Build.ArtifactStagingDirectory)
         
-# - script: |
-#     python -m twine upload -r FooFinder_Feed --config-file $(PYPIRC_PATH) dist/dist/*.tar.gz
+    - script: |
+        python -m twine upload -r FooFinder_Feed --config-file $(Build.ArtifactStagingDirectory) dist/dist/*.tar.gz
 
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'dist'
-        publishLocation: 'Container'
+    # - task: PublishBuildArtifacts@1
+    #   inputs:
+    #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    #     ArtifactName: 'dist'
+    #     publishLocation: 'Container'
 
 # - script: |
 #     python setup.py sdist
