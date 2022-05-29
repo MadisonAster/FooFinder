@@ -51,7 +51,10 @@ stages:
 
     - task: CopyFiles@2
       inputs:
-        targetFolder: $(Build.ArtifactStagingDirectory)
+        targetFolder: $(Build.ArtifactStagingDirectory)/dist/dist
+        
+# - script: |
+#     python -m twine upload -r FooFinder_Feed --config-file $(PYPIRC_PATH) dist/dist/*.tar.gz
 
     - task: PublishBuildArtifacts@1
       inputs:
