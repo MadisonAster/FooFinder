@@ -19,6 +19,9 @@ steps:
   inputs:
     versionSpec: '$(python.version)'
   displayName: 'Use Python $(python.version)'
+  - script: |
+      python FooFinder/test.py
+      displayName: 'Integration Tests'
 
 - script: |
     python -m pip install --upgrade pip
@@ -28,8 +31,22 @@ steps:
 
 - script: |
     python setup.py sdist
-    python setup.py bdist_wheel --universal
-  displayName: 'python setup.py sdist'
+  displayName: 'Artifact creation'
+
+- task: CopyFiles@2
+  inputs:
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'dist'
+    publishLocation: 'Container'
+
+# - script: |
+#     python setup.py sdist
+#     python setup.py bdist_wheel --universal
+#   displayName: 'python setup.py sdist'
 
 # - task: CopyFiles@2
 #   displayName: 'Copy Python Wheel to: $(Build.ArtifactStagingDirectory)'
@@ -38,19 +55,19 @@ steps:
 #     Contents: 'dist/*.whl'
 #     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- task: TwineAuthenticate@1
-  displayName: Twine Authenticate
-  inputs:
-    artifactFeed: FooFinder/FooFinder_Feed
+# - task: TwineAuthenticate@1
+#   displayName: Twine Authenticate
+#   inputs:
+#     artifactFeed: FooFinder/FooFinder_Feed
 
-- script: 'pip install twine'
-  displayName: 'pip install twine'
+# - script: 'pip install twine'
+#   displayName: 'pip install twine'
 
-- script: |
-    python -m twine upload -r FooFinder_Feed --config-file $(PYPIRC_PATH) dist/*.whl
-  displayName: 'twine upload --username $(username) --password ??? $(Build.ArtifactStagingDirectory)/dist/*.whl'
-  condition: succeededOrFailed()
-  timeoutInMinutes: 20
+# - script: |
+#     python -m twine upload -r FooFinder_Feed --config-file $(PYPIRC_PATH) dist/*.whl
+#   displayName: 'twine upload --username $(username) --password ??? $(Build.ArtifactStagingDirectory)/dist/*.whl'
+#   condition: succeededOrFailed()
+#   timeoutInMinutes: 20
 
 # twine upload --username $(username) --password $(password) $(Build.ArtifactStagingDirectory)/dist/*.whl
 # trigger:
