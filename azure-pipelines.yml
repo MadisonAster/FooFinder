@@ -13,35 +13,56 @@ strategy:
       python.version: '3.8'
     Python39:
       python.version: '3.9'
+stages:
+- stage: Test
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    strategy:
+      matrix:
+        Python36:
+          python.version: '3.6'
+        Python37:
+          python.version: '3.7'
+        Python38:
+          python.version: '3.8'
+        Python39:
+          python.version: '3.9'
+    steps:
+    
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
-  - script: |
-      python FooFinder/test.py
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(python.version)'
+      displayName: 'Use Python $(python.version)'
+
+    #- script: |
+    #  displayName: 'Install dependencies'
+
+    - script: |
+        python FooFinder/test.py
       displayName: 'Integration Tests'
 
-- script: |
-    python -m pip install --upgrade pip
-    pip install wheel
-    pip install twine
-  displayName: 'Install dependencies'
+    - script: |
+        python -m pip install --upgrade pip
+        pip install wheel
+        pip install twine
+      displayName: 'Install dependencies'
 
-- script: |
-    python setup.py sdist
-  displayName: 'Artifact creation'
+    - script: |
+        python setup.py sdist
+      displayName: 'Artifact creation'
 
-- task: CopyFiles@2
-  inputs:
-    targetFolder: $(Build.ArtifactStagingDirectory)
+    - task: CopyFiles@2
+      inputs:
+        targetFolder: $(Build.ArtifactStagingDirectory)
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'dist'
-    publishLocation: 'Container'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'dist'
+        publishLocation: 'Container'
 
 # - script: |
 #     python setup.py sdist
