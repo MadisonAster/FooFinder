@@ -31,6 +31,14 @@ stages:
         python FooFinder/test.py
       displayName: 'Integration Tests'
 
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    strategy:
+      matrix:
+        Python37:
+          python.version: '3.7'
+    steps:
     - script: |
         python -m pip install --upgrade pip
         pip install wheel
