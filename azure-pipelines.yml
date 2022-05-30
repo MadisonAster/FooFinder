@@ -53,6 +53,9 @@ stages:
         targetFolder: $(Build.ArtifactStagingDirectory)
         
     - script: |
+        pwd
+        ls $(Build.ArtifactStagingDirectory)/dist/dist
+        ls $(Build.ArtifactStagingDirectory)
         python -m twine upload -r FooFinder_Feed dist $(Build.ArtifactStagingDirectory)/dist/dist/*.tar.gz
 
     # - task: PublishBuildArtifacts@1
