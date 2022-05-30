@@ -47,7 +47,9 @@ stages:
         echo $(python setup.py --version)
     - bash: |
         echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
-      displayName: 'Check Version'
+    - script: |
+        echo $(RELEASE_VERSION)
+      displayName: 'Build Dependencies'
 
     - script: |
         python setup.py sdist
