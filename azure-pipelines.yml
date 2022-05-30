@@ -54,7 +54,7 @@ stages:
         
     - script: |
         pwd
-        ls ~/dist/dist/
+        ls ./dist/dist/
         python -m twine upload -r FooFinder_Feed dist $(Build.ArtifactStagingDirectory)/dist/dist/*.tar.gz
 
     # ls $(Build.ArtifactStagingDirectory)/dist/dist
