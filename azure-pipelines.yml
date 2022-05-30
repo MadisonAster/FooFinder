@@ -70,7 +70,7 @@ stages:
         tagSource: 'auto' # Required when action == Create# Options: auto, manual
         tagPattern: '[0-9]+.[0-9]+.[0-9]+' # Optional
         tag: $(python setup.py --version) # Required when action == Edit || Action == Delete || TagSource == Manual
-        title: $(Build.SourceVersion) # Optional
+        title: $(python setup.py --version) # Optional
         #releaseNotesSource: 'file' # Optional. Options: file, inline
         #releaseNotesInline: Use this option to manually enter release notes. Use with releaseNotesSource = inline
         #releaseNotesFilePath: # Optional. Use the contents of a file as release notes. 
