@@ -65,7 +65,7 @@ stages:
         action: 'create' # Options: create, edit, delete
         target: $(Build.SourceVersion) # Required when action == Create || Action == Edit
         tagSource: 'auto' # Required when action == Create# Options: auto, manual
-        #tagPattern: # Optional
+        tagPattern: '[0-9]+.[0-9]+.[0-9]+' # Optional
         #tag: $(Build.SourceVersion) # Required when action == Edit || Action == Delete || TagSource == Manual
         title: $(Build.SourceVersion) # Optional
         #releaseNotesSource: 'file' # Optional. Options: file, inline
