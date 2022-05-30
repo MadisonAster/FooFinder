@@ -45,7 +45,9 @@ stages:
         echo "SourceVersion" 
         echo $(Build.SourceVersion)
         echo $(python setup.py --version)
-      displayName: 'Install dependencies'
+    - bash: |
+        echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
+      displayName: 'Check Version'
 
     - script: |
         python setup.py sdist
@@ -69,8 +71,8 @@ stages:
         target: $(Build.SourceVersion) # Required when action == Create || Action == Edit
         tagSource: 'auto' # Required when action == Create# Options: auto, manual
         tagPattern: '[0-9]+.[0-9]+.[0-9]+' # Optional
-        tag: $(python setup.py --version) # Required when action == Edit || Action == Delete || TagSource == Manual
-        title: $(python setup.py --version) # Optional
+        tag: $(RELEASE_VERSION) # Required when action == Edit || Action == Delete || TagSource == Manual
+        title: $(RELEASE_VERSION) # Optional
         #releaseNotesSource: 'file' # Optional. Options: file, inline
         #releaseNotesInline: Use this option to manually enter release notes. Use with releaseNotesSource = inline
         #releaseNotesFilePath: # Optional. Use the contents of a file as release notes. 
