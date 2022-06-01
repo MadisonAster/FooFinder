@@ -36,19 +36,17 @@ stages:
         BuildArtifact:
           python.version: '3.7'
     steps:
-    - task:
-      name: TagVariables
+    - script: |
+        echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
+        echo "##vso[task.setvariable variable=TAG_VERSION]$(git tag --points-at $(Build.SourceVersion))"
+        echo "##vso[task.setvariable variable=SBNAME]$(Build.SourceBranchName)"
+      #name: TagVariables
       displayName: 'Set Tag Variables'
-      inputs:
-        targetType: inline
-        script: |
-            echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
-            echo "##vso[task.setvariable variable=TAG_VERSION]$(git tag --points-at $(Build.SourceVersion))"
-            echo "##vso[task.setvariable variable=SBNAME]$(Build.SourceBranchName)"
     - script: |
         echo $(RELEASE_VERSION)
         echo $(TAG_VERSION)
         echo $(SBNAME)
+        eq(variables.TAG_VERSION, variables.RELEASE_VERSION)
       displayName: 'Try Tag Variables'
 
   - job:
@@ -60,7 +58,7 @@ stages:
           python.version: '3.7'
     dependsOn: Tags
     #condition: eq(variables.TAG_VERSION, variables.RELEASE_VERSION)
-    condition: eq(dependencies.Tags.outputs['Tags.TagVariables.TAG_VERSION'], dependencies.Tags.outputs['Tags.TagVariables.RELEASE_VERSION'])
+    condition: eq(dependencies.Tags.outputs['Tags.TAG_VERSION'], dependencies.Tags.outputs['Tags.RELEASE_VERSION'])
     steps:
     - script: |
         pip install twine
