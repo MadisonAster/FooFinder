@@ -8,7 +8,7 @@ def readme():
     return filetext
 setup(
     name='FooFinder',
-    version='3.0.44',
+    version='3.0.45',
     description='A package designed to help you find foo.',
     long_description=readme(),
     long_description_content_type='text/markdown',
@@ -29,6 +29,7 @@ setup(
             'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
+            'Programming Language :: Python :: 3.10',
             ],
 
     keywords='relative imports importing recursive',
