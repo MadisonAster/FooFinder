@@ -40,7 +40,7 @@ stages:
         pip install twine
     - bash: |
         echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
-        echo "##vso[task.setvariable variable=HAS_TAG]$(startsWith(variables['Build.SourceBranch'], 'refs/tags/'))"
+        echo "##vso[task.setvariable variable=HAS_TAG]$(Build.SourceBranchName)"
     - script: |
         echo $(RELEASE_VERSION)
         echo $(HAS_TAG)
