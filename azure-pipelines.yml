@@ -29,7 +29,6 @@ stages:
       displayName: 'Integration Tests'
 
 trigger:
-- master
   tags:
     include:
     - '*'
