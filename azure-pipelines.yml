@@ -37,7 +37,6 @@ stages:
           python.version: '3.7'
     steps:
     - script: |
-        pip install wheel
         pip install twine
     - bash: |
         echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
@@ -85,10 +84,14 @@ stages:
       inputs:
         pythonUploadServiceConnection: 'PyPi-FooFinder'
         #artifactFeed: 'FooFinder'
-    
-    - script:
-        cat $(PYPIRC_PATH)
-      displayName: "debug"
+    - script: |
+        pip install wheel
+        python setup.py bdist_wheel
+        python -m twine upload -r FooFinder --config-file $(PYPIRC_PATH) dist/*.whl
+
+    # - script:
+    #     cat $(PYPIRC_PATH)
+    #   displayName: "debug"
 
     #- script:
     #    python -m twine upload --non-interactive -r "FooFinder" --config-file $(PYPIRC_PATH) $(Build.ArtifactStagingDirectory)/FooFinder/FooFinder-$(RELEASE_VERSION).tar.gz
