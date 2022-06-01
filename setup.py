@@ -2,7 +2,8 @@ import os
 from setuptools import setup
 
 def readme():
-    with open('README.md', 'r') as file:
+    cwd = os.path.dirname(os.path.abspath(__file__))
+    with open(cwd+'/README.md', 'r') as file:
         filetext = file.read()
     return filetext
 setup(
