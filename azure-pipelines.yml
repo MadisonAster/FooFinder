@@ -28,14 +28,11 @@ stages:
         python FooFinder/test.py
       displayName: 'Integration Tests'
 
-trigger:
-  tags:
-    include:
-    - '*'
-stages:
-- stage: Build
-  jobs:
   - job:
+    trigger:
+      tags:
+        include:
+        - '*'
     pool:
       vmImage: 'ubuntu-latest'
     strategy:
