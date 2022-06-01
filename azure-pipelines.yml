@@ -88,8 +88,11 @@ stages:
     
     - script:
         cat $(PYPIRC_PATH)
-        python -m twine upload --non-interactive -r "FooFinder" --config-file $(PYPIRC_PATH) $(Build.ArtifactStagingDirectory)/FooFinder/FooFinder-$(RELEASE_VERSION).tar.gz
-      displayName: "Upload PyPi Package"
+      displayName: "debug"
+
+    #- script:
+    #    python -m twine upload --non-interactive -r "FooFinder" --config-file $(PYPIRC_PATH) $(Build.ArtifactStagingDirectory)/FooFinder/FooFinder-$(RELEASE_VERSION).tar.gz
+    #  displayName: "Upload PyPi Package"
 
       # - script: |
       #     python -m twine upload -r <<<<<FEED NAME>>>>> --config-file $(PYPIRC_PATH) dist/*whl
