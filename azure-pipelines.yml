@@ -81,6 +81,16 @@ stages:
         #compareWith: 'lastFullRelease' # Required when addChangeLog == True. Options: lastFullRelease, lastRelease, lastReleaseByTag
         #releaseTag: # Required when compareWith == LastReleaseByTag
 
+    - task: TwineAuthenticate@1
+      inputs:
+        pythonUploadServiceConnection: 'PyPi-FooFinder'
+        artifactFeeds: 'FooFinder_Feed'
+    
+    - script: 'python -m twine upload -r FooFinder_Feed FooFinder/*.tar.gz'
+      displayName: "Upload PyPi Package"
+
+      # - script: |
+      #     python -m twine upload -r <<<<<FEED NAME>>>>> --config-file $(PYPIRC_PATH) dist/*whl
 #     # Use command line script to 'twine upload', use -r to pass the repository name and --config-file to pass the environment variable set by the authenticate task.
 #     #python -m twine upload -r "AzureTwineConnection" --config-file $(PYPIRC_PATH) dist/*.whl
 #     #python -m twine upload -r FooFinder --repository-url https://upload.pypi.org/legacy/ --config-file $(PYPIRC_PATH) dist/*.whl
