@@ -55,6 +55,7 @@ stages:
       matrix:
         BuildArtifact:
           python.version: '3.7'
+    dependsOn: Tags
     condition: eq(dependencies.Tags.outputs['TagVariables.TAG_VERSION'], dependencies.Tags.outputs['TagVariables.RELEASE_VERSION'])
     steps:
     - script: |
