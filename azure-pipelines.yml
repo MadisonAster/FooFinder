@@ -29,10 +29,6 @@ stages:
       displayName: 'Integration Tests'
 
   - job:
-    trigger:
-      tags:
-        include:
-        - '*'
     pool:
       vmImage: 'ubuntu-latest'
     strategy:
@@ -44,8 +40,10 @@ stages:
         pip install twine
     - bash: |
         echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
+        echo "##vso[task.setvariable variable=HAS_TAG]$(startsWith(variables['Build.SourceBranch'], 'refs/tags/'))"
     - script: |
         echo $(RELEASE_VERSION)
+        echo $(HAS_TAG)
       displayName: 'Build Dependencies'
 
     - script: |
