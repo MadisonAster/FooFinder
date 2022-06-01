@@ -41,7 +41,7 @@ stages:
       displayName: 'Set Tag Variables'
       inputs:
         targetType: inline
-        - script: |
+        script: |
             echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
             echo "##vso[task.setvariable variable=TAG_VERSION]$(git tag --points-at $(Build.SourceVersion))"
             echo "##vso[task.setvariable variable=SBNAME]$(Build.SourceBranchName)"
