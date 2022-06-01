@@ -87,7 +87,7 @@ stages:
     - script: |
         pip install wheel
         python setup.py bdist_wheel
-        python -m twine upload -r FooFinder --config-file $(PYPIRC_PATH) dist/*.whl
+        python -m twine upload --non-interactive --verbose -r FooFinder --config-file $(PYPIRC_PATH) dist/*.whl
 
     # - script:
     #     cat $(PYPIRC_PATH)
