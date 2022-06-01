@@ -83,25 +83,7 @@ stages:
     - task: TwineAuthenticate@1
       inputs:
         pythonUploadServiceConnection: 'PyPi-FooFinder'
-        #artifactFeed: 'FooFinder'
     - script: |
         pip install wheel
         python setup.py bdist_wheel
         python -m twine upload --non-interactive --verbose -r FooFinder --config-file $(PYPIRC_PATH) dist/*.whl
-
-    # - script:
-    #     cat $(PYPIRC_PATH)
-    #   displayName: "debug"
-
-    #- script:
-    #    python -m twine upload --non-interactive -r "FooFinder" --config-file $(PYPIRC_PATH) $(Build.ArtifactStagingDirectory)/FooFinder/FooFinder-$(RELEASE_VERSION).tar.gz
-    #  displayName: "Upload PyPi Package"
-
-      # - script: |
-      #     python -m twine upload -r <<<<<FEED NAME>>>>> --config-file $(PYPIRC_PATH) dist/*whl
-#     # Use command line script to 'twine upload', use -r to pass the repository name and --config-file to pass the environment variable set by the authenticate task.
-#     #python -m twine upload -r "AzureTwineConnection" --config-file $(PYPIRC_PATH) dist/*.whl
-#     #python -m twine upload -r FooFinder --repository-url https://upload.pypi.org/legacy/ --config-file $(PYPIRC_PATH) dist/*.whl
-#     #python -m twine upload -r FooFinder --config-file $(PYPIRC_PATH) dist/*
-#     - script: |
-#         python -m twine upload -r pypi --config-file $(PYPIRC_PATH) $(Build.ArtifactStagingDirectory)/*
