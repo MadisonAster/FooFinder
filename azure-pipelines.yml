@@ -84,7 +84,7 @@ stages:
     - task: TwineAuthenticate@1
       inputs:
         pythonUploadServiceConnection: 'PyPi-FooFinder'
-        artifactFeed: 'FooFinder'
+        #artifactFeed: 'FooFinder'
     
     - script: 'python -m twine upload -r FooFinder --config-file $(PYPIRC_PATH) $(Build.ArtifactStagingDirectory)/FooFinder/*.tar.gz'
       displayName: "Upload PyPi Package"
