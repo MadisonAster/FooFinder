@@ -28,6 +28,14 @@ stages:
         python FooFinder/test.py
       displayName: 'Integration Tests'
 
+trigger:
+- master
+  tags:
+    include:
+    - '*'
+stages:
+- stage: Build
+  jobs:
   - job:
     pool:
       vmImage: 'ubuntu-latest'
@@ -80,10 +88,10 @@ stages:
         #compareWith: 'lastFullRelease' # Required when addChangeLog == True. Options: lastFullRelease, lastRelease, lastReleaseByTag
         #releaseTag: # Required when compareWith == LastReleaseByTag
 
-      - task: TwineAuthenticate@1
-        inputs:
-          pythonUploadServiceConnection: 'PyPi-FooFinder'
-      - script: |
-          pip install wheel
-          python setup.py bdist_wheel
-          python -m twine upload --non-interactive --verbose -r FooFinder --config-file $(PYPIRC_PATH) dist/*.whl
+    - task: TwineAuthenticate@1
+      inputs:
+        pythonUploadServiceConnection: 'PyPi-FooFinder'
+    - script: |
+        pip install wheel
+        python setup.py bdist_wheel
+        python -m twine upload --non-interactive --verbose -r FooFinder --config-file $(PYPIRC_PATH) dist/*.whl
