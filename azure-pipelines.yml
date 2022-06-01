@@ -28,7 +28,7 @@ stages:
         python FooFinder/test.py
       displayName: 'Integration Tests'
 
-  - job:
+  - job: Tags
     pool:
       vmImage: 'ubuntu-latest'
     strategy:
@@ -37,18 +37,26 @@ stages:
           python.version: '3.7'
     steps:
     - script: |
-        pip install twine
-    - bash: |
         echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
-        echo "##vso[task.setvariable variable=SVERSION]$(Build.SourceVersion)"
+        echo "##vso[task.setvariable variable=TAG_VERSION]$(git tag --points-at $(Build.SourceVersion))"
         echo "##vso[task.setvariable variable=SBNAME]$(Build.SourceBranchName)"
-    - script: |
         echo $(RELEASE_VERSION)
-        echo $(SVERSION)
+        echo $(TAG_VERSION)
         echo $(SBNAME)
-      displayName: 'Build Dependencies'
+      name: TagVariables
+      displayName: 'Tag Variables'
 
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    strategy:
+      matrix:
+        BuildArtifact:
+          python.version: '3.7'
+    condition: eq(dependencies.Tags.outputs['TagVariables.TAG_VERSION'], dependencies.Tags.outputs['TagVariables.RELEASE_VERSION'])
+    steps:
     - script: |
+        pip install twine
         python setup.py sdist
       displayName: 'Artifact creation'
 
