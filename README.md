@@ -4,6 +4,7 @@
 ![PyPI](https://img.shields.io/pypi/v/FooFinder)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/FooFinder)
 [![Build Status](https://travis-ci.org/MadisonAster/FooFinder.svg?branch=master)](https://travis-ci.org/MadisonAster/FooFinder)
+![Azure Status](https://vsrm.dev.azure.com/KungFuTools/_apis/public/Release/badge/ae5e15b1-1a64-41be-af7a-83566fa8a3f7/1/1)
 
 
 *A package designed to help you find foo. FooFinder makes relative imports easy with this one simple trick!*
