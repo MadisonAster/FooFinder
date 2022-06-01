@@ -1,7 +1,7 @@
 trigger:
 - master
 stages:
-- stage: Test
+- stage: Pipe
   jobs:
   - job:
     pool:
@@ -36,17 +36,19 @@ stages:
         BuildArtifact:
           python.version: '3.7'
     steps:
-    - script: |
-        echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
-        echo "##vso[task.setvariable variable=TAG_VERSION]$(git tag --points-at $(Build.SourceVersion))"
-        echo "##vso[task.setvariable variable=SBNAME]$(Build.SourceBranchName)"
+    - task:
       name: TagVariables
-      displayName: 'Set Tag Variables'
-    - script: |
-        echo $(RELEASE_VERSION)
-        echo $(TAG_VERSION)
-        echo $(SBNAME)
-      displayName: 'Try Tag Variables'
+      - script: |
+          echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
+          echo "##vso[task.setvariable variable=TAG_VERSION]$(git tag --points-at $(Build.SourceVersion))"
+          echo "##vso[task.setvariable variable=SBNAME]$(Build.SourceBranchName)"
+        displayName: 'Set Tag Variables'
+      - script: |
+          echo $(RELEASE_VERSION)
+          echo $(TAG_VERSION)
+          echo $(SBNAME)
+          eq(variables.TAG_VERSION, variables.RELEASE_VERSION)
+        displayName: 'Try Tag Variables'
 
   - job:
     pool:
@@ -56,8 +58,8 @@ stages:
         BuildArtifact:
           python.version: '3.7'
     dependsOn: Tags
-    condition: eq(variables.TAG_VERSION, variables.RELEASE_VERSION)
-    #condition: eq(dependencies.Tags.outputs['TagVariables.TAG_VERSION'], dependencies.Tags.outputs['TagVariables.RELEASE_VERSION'])
+    #condition: eq(variables.TAG_VERSION, variables.RELEASE_VERSION)
+    condition: eq(dependencies.Tags.outputs['Tags.TagVariables.TAG_VERSION'], dependencies.Tags.outputs['Tags.TagVariables.RELEASE_VERSION'])
     steps:
     - script: |
         pip install twine
