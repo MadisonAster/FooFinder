@@ -46,7 +46,6 @@ stages:
         echo $(RELEASE_VERSION)
         echo $(TAG_VERSION)
         echo $(SBNAME)
-        eq(variables.TAG_VERSION, variables.RELEASE_VERSION)
       displayName: 'Try Tag Variables'
 
   - job:
