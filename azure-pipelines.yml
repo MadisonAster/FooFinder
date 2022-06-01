@@ -87,7 +87,7 @@ stages:
         #artifactFeed: 'FooFinder'
     
     - script: 
-        python -m twine upload -r "FooFinder" --config-file $(PYPIRC_PATH) $(Build.ArtifactStagingDirectory)/FooFinder/FooFinder-$(RELEASE_VERSION).tar.gz
+        python -m twine upload --non-interactive -r "FooFinder" --config-file $(PYPIRC_PATH) $(Build.ArtifactStagingDirectory)/FooFinder/FooFinder-$(RELEASE_VERSION).tar.gz
       displayName: "Upload PyPi Package"
 
       # - script: |
