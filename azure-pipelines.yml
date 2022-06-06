@@ -118,7 +118,8 @@ stages:
   
     - task: TwineUpload
       condition: eq(variables['TAG_VERSION'], variables['RELEASE_VERSION'])
-      script: |
-        pip install wheel
-        python setup.py bdist_wheel
-        python -m twine upload --non-interactive --verbose -r FooFinder --config-file $(PYPIRC_PATH) dist/*.whl
+      inputs:
+        script: |
+          pip install wheel
+          python setup.py bdist_wheel
+          python -m twine upload --non-interactive --verbose -r FooFinder --config-file $(PYPIRC_PATH) dist/*.whl
