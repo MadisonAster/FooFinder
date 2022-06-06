@@ -38,7 +38,6 @@ stages:
 - stage: Deploy
   dependsOn: Test
   # condition: eq(dependencies.Tags.outputs['Tags.TAG_VERSION'], dependencies.Tags.outputs['Tags.RELEASE_VERSION'])
-  condition: eq(variables['TAG_VERSION'], variables['RELEASE_VERSION'])
   jobs:
   - job: Tags
     pool:
@@ -61,6 +60,7 @@ stages:
       displayName: 'Try Tag Variables'
   - job: Deploy
     dependsOn: Tags
+    condition: eq(variables['TAG_VERSION'], variables['RELEASE_VERSION'])
     pool:
       vmImage: 'ubuntu-latest'
     strategy:
