@@ -62,6 +62,11 @@ stages:
           python.version: '3.7'
     steps:
 
+    - script: |
+        pip install twine
+        python setup.py sdist
+      displayName: 'Artifact creation'
+
     - task: CopyFiles@2
       inputs:
         SourceFolder: ./dist
