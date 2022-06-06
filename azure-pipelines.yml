@@ -35,7 +35,6 @@ stages:
     #   #name: TagVariables
     #   displayName: 'Set Tag Variables'
 
-stages:
 - stage: Deploy
   dependsOn: Test
   # condition: eq(dependencies.Tags.outputs['Tags.TAG_VERSION'], dependencies.Tags.outputs['Tags.RELEASE_VERSION'])
