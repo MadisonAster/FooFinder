@@ -58,7 +58,7 @@ stages:
         echo $(TAG_VERSION)
         echo $(SBNAME)
       displayName: 'Try Tag Variables'
-  - job:
+  - job: Deploy
     dependsOn: Tags
     pool:
       vmImage: 'ubuntu-latest'
@@ -89,7 +89,7 @@ stages:
         ArtifactName: 'FooFinder'
 
     - task: GitHubRelease@0
-      condition: eq(Tags.outputs['Tags.TAG_VERSION'], Tags.outputs['Tags.RELEASE_VERSION'])
+      condition: eq(variables['TAG_VERSION'], variables['RELEASE_VERSION'])
       inputs:
         gitHubConnection: github.com_MadisonAster
         repositoryName: $(Build.Repository.Name)
@@ -112,7 +112,7 @@ stages:
         #releaseTag: # Required when compareWith == LastReleaseByTag
 
     - task: TwineAuthenticate@1
-      condition: eq(Tags.outputs['Tags.TAG_VERSION'], Tags.outputs['Tags.RELEASE_VERSION'])
+      condition: eq(variables['TAG_VERSION'], variables['RELEASE_VERSION'])
       inputs:
         pythonUploadServiceConnection: 'PyPi-FooFinder'
     - script: |
