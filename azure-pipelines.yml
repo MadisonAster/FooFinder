@@ -29,7 +29,7 @@ stages:
         python FooFinder/test.py
       displayName: 'Integration Tests'
 
-- stage: Build & Deploy
+- stage: Build and Deploy
   dependsOn: Test
   jobs:
   - job: Build
