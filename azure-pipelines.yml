@@ -38,6 +38,7 @@ stages:
 - stage: Deploy
   dependsOn: Test
   # condition: eq(dependencies.Tags.outputs['Tags.TAG_VERSION'], dependencies.Tags.outputs['Tags.RELEASE_VERSION'])
+  condition: eq(variables['TAG_VERSION'], variables['RELEASE_VERSION'])
   jobs:
   - job: Tags
     pool:
@@ -115,11 +116,7 @@ stages:
       condition: eq(variables['TAG_VERSION'], variables['RELEASE_VERSION'])
       inputs:
         pythonUploadServiceConnection: 'PyPi-FooFinder'
-  
-    - task: TwineUpload
-      condition: eq(variables['TAG_VERSION'], variables['RELEASE_VERSION'])
-      inputs:
-        script: |
-          pip install wheel
-          python setup.py bdist_wheel
-          python -m twine upload --non-interactive --verbose -r FooFinder --config-file $(PYPIRC_PATH) dist/*.whl
+    - script: |
+        pip install wheel
+        python setup.py bdist_wheel
+        python -m twine upload --non-interactive --verbose -r FooFinder --config-file $(PYPIRC_PATH) dist/*.whl
