@@ -88,7 +88,7 @@ stages:
         ArtifactName: 'FooFinder'
 
     - task: GitHubRelease@0
-      condition: eq(Deploy.Tags.outputs['Tags.TAG_VERSION'], Deploy.Tags.outputs['Tags.RELEASE_VERSION'])
+      condition: eq(Tags.outputs['Tags.TAG_VERSION'], Tags.outputs['Tags.RELEASE_VERSION'])
       inputs:
         gitHubConnection: github.com_MadisonAster
         repositoryName: $(Build.Repository.Name)
@@ -111,7 +111,7 @@ stages:
         #releaseTag: # Required when compareWith == LastReleaseByTag
 
     - task: TwineAuthenticate@1
-      condition: eq(Deploy.Tags.outputs['Tags.TAG_VERSION'], Deploy.Tags.outputs['Tags.RELEASE_VERSION'])
+      condition: eq(Tags.outputs['Tags.TAG_VERSION'], Tags.outputs['Tags.RELEASE_VERSION'])
       inputs:
         pythonUploadServiceConnection: 'PyPi-FooFinder'
     - script: |
