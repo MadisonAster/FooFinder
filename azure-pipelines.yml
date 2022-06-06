@@ -65,7 +65,7 @@ stages:
       matrix:
         BuildArtifact:
           python.version: '3.7'
-     steps:
+    steps:
     - script: |
         pip install twine
         python setup.py sdist
