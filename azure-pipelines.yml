@@ -19,6 +19,7 @@ stages:
         Python310:
           python.version: '3.10'
     steps:
+
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '$(python.version)'
@@ -28,10 +29,10 @@ stages:
         python FooFinder/test.py
       displayName: 'Integration Tests'
 
-- stage: Deploy
+- stage: Build & Deploy
   dependsOn: Test
   jobs:
-  - job: Tags
+  - job: Build
     pool:
       vmImage: 'ubuntu-latest'
     strategy:
@@ -39,25 +40,7 @@ stages:
         BuildArtifact:
           python.version: '3.7'
     steps:
-    - script: |
-        echo "##vso[task.setvariable variable=RELEASE_VERSION]$(python setup.py --version)"
-        echo "##vso[task.setvariable variable=TAG_VERSION]$(git tag --points-at $(Build.SourceVersion))"
-        echo "##vso[task.setvariable variable=SBNAME]$(Build.SourceBranchName)"
-      displayName: 'Set Tag Variables'
-    - script: |
-        echo $(RELEASE_VERSION)
-        echo $(TAG_VERSION)
-        echo $(SBNAME)
-      displayName: 'Try Tag Variables'
-  - job: Deploy
-    dependsOn: Tags
-    pool:
-      vmImage: 'ubuntu-latest'
-    strategy:
-      matrix:
-        BuildArtifact:
-          python.version: '3.7'
-    steps:
+
     - script: |
         pip install twine
         python setup.py sdist
@@ -68,6 +51,16 @@ stages:
         echo "##vso[task.setvariable variable=TAG_VERSION]$(git tag --points-at $(Build.SourceVersion))"
         echo "##vso[task.setvariable variable=SBNAME]$(Build.SourceBranchName)"
       displayName: 'Set Tag Variables'
+  
+  - job: Deploy
+    dependsOn: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    strategy:
+      matrix:
+        BuildArtifact:
+          python.version: '3.7'
+    steps:
 
     - task: CopyFiles@2
       inputs:
@@ -106,6 +99,7 @@ stages:
       condition: eq(variables['TAG_VERSION'], variables['RELEASE_VERSION'])
       inputs:
         pythonUploadServiceConnection: 'PyPi-FooFinder'
+  
     - script: |
         pip install wheel
         python setup.py bdist_wheel
