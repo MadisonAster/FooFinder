@@ -59,6 +59,7 @@ stages:
         echo $(SBNAME)
       displayName: 'Try Tag Variables'
   - job:
+    dependsOn: Tags
     pool:
       vmImage: 'ubuntu-latest'
     strategy:
